@@ -7,7 +7,7 @@
 <form method="post" action="{% url 'create_goods' shop.id %}">
 {% csrf_token %}
 <div class="form-group">
-<label for="name">所属商店：{{shop.name}}
+<label for="name">所属商店：{{ shop.name }}
 </label>
 </div>
 <div class="form-group">
