@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<ul class="list-group">
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">
+        {% bootstrap_icon 'user' %}{{ user.username }}
+        </div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">
+        个人信息：{{ user.introduction }}
+        </div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">
+        <a href="{% url 'index'  %}">返回主页</a>
+        </div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">
+        <a href="{% url 'index'  %}">我的订单</a>
+        </div>
+    </li>
+</ul>
+{% endblock %}
+

@@ -26,7 +26,7 @@ class Shop(models.Model):
     created_at = models.DateTimeField(default = timezone.now)
 
 class ShoppingCartItem(models.Model):
-    owner = models.ForeignKey('Webuser', 
+    owner = models.ForeignKey('Webuser',
         related_name = 'shoppingCart',
         related_query_name = 'shoppingCartItem')
     number = models.PositiveIntegerField()
@@ -113,4 +113,4 @@ class GoodsForm(forms.ModelForm):
         model = Goods
         fields = ('name', 'price', 'introduction')
 
-  
+
