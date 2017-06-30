@@ -1,12 +1,21 @@
-{% extends 'base.html' %} {% load bootstrap3 %} 
-{% block create_goods %}
-{% if user.real_user.is_owner %}
+{% extends 'base.html' %} {% load bootstrap3 %} {% block create %} {% if user.real_user.is_owner %}
 <li role="presentation">
     <a href="{% url 'create_goods' shop.id %}">创建商品</a>
 </li>
-{% endif %}
-{% endblock %}
-{% block content %}
+{% endif %} {% endblock %} {% block search %}
+<li role="presentation">
+<form method="post" action="{% url 'signup-submit' %}" style="float:left">
+    {% csrf_token %}
+    <div class="form-group" style="display:inline-block;margin-bottom:0">
+        <label for="search" style="float:left;padding-top:7px">请输入搜索关键词：
+        </label>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Keywords" required style="float:left;width:200px"/>
+        <button type="submit" class="btn btn-primary">GO
+        </button>
+    </div>
+</form>
+</li>
+{% endblock %} {% block content %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3>{{ shop.name}}</h3>
@@ -33,4 +42,4 @@
     </li>
     {% endfor %}
 </ul>
-{% endblock %} 
+{% endblock %}
