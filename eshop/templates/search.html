@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% load bootstrap3 %} {% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Search result:</h3>
+        <small>
+{% bootstrap_icon 'home' %}<strong>{{ shop.name }}</strong>
+</small>
+    </div>
+    <div class="panel-body word-wrap">
+        The goods that are {{ target_key.name }} related are as follows...
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+{% endblock %}
