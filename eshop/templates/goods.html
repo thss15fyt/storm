@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% load bootstrap3 %} 
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>{{ goods.name }}</h3>
+        <small>
+{% bootstrap_icon 'user' %}<strong>{{ goods.shop.owner.ori_user}}</strong>
+</small>
+    </div>
+
+    <div class="panel-footer"></div>
+</div>
+<ul class="list-group">
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">商品名：{{ goods.name }}</div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">商品价格：{{ goods.price }}</div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
+    </li>
+</ul>
+{% endblock %} 

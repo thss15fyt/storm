@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% load bootstrap3 %} 
+{% block create_shop %}
+{% if user.real_user.is_owner %}
+<li role="presentation">
+    <a href="{% url 'create_shop' %}">创建店铺</a>
+</li>
+{% endif %}
+{% endblock %}
+{% block content %}
+<table class="table">
+    <tbody>
+        {% for shop in shops %}
+        <tr>
+            <td><a href="{% url 'shop' shop.id %}">{{shop.name}}</a>
+                <div class="pull-right">
+                    {% bootstrap_icon 'user' %}<b>{{shop.owner.ori_user}}</b>
+                    {% bootstrap_icon 'time' %}{{shop.created_at}}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
