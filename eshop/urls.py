@@ -12,6 +12,8 @@ urlpatterns = [
 
     url(r'^homepage$', auth_views.homepage, name='homepage'),
     url(r'^shoppingcart$', auth_views.shoppingcart, name='shoppingcart'),
+    url(r'^remittance$', auth_views.remittance, name='remittance'),
+
 
     url(r'^create_shop$', views.create_shop, name='create_shop'),
 

@@ -46,3 +46,6 @@ def homepage(request):
 
 def shoppingcart(request):
     return render(request, 'shoppingcart.html')
+
+def remittance(request):
+    return render(request, 'remittance.html')

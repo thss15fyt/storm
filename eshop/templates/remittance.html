@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<table class="table">
+    <tbody>
+        {% for item in user.remittances %}
+        <tr>
+            <td>
+            <a href = "{% url 'index' %}">
+                订单{{item.id}}
+            </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
