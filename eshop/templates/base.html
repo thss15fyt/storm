@@ -12,8 +12,14 @@
     <nav>
         <ul class="nav nav-pills pull-right" style="margin-top:12px">
             {% if user.is_authenticated %}
-            {% block search %}{% endblock %}
-            {% block create %}{% endblock %}
+            {% block create_shop %}{% endblock %}
+            {% block create_goods %}{% endblock %}
+            <li role="presentation">
+                <a href="{% url 'homepage' %}">个人主页</a>
+            </li>
+            <li role="presentation">
+                <a href="{% url 'shoppingcart' %}">购物车</a>
+            </li>
             <li role="presentation">
                 <a href="{% url 'logout' %}">登出(<b>{{ user.username}}</b>)</a>
             </li>

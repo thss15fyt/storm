@@ -10,6 +10,11 @@ urlpatterns = [
     url(r'^signup/submit$', auth_views.signup_submit, name='signup-submit'),
     url(r'^logout$', auth_views.logout, name='logout'),
 
+    url(r'^homepage$', auth_views.homepage, name='homepage'),
+    url(r'^shoppingcart$', auth_views.shoppingcart, name='shoppingcart'),
+    url(r'^remittance$', auth_views.remittance, name='remittance'),
+
+
     url(r'^create_shop$', views.create_shop, name='create_shop'),
 
     url(r'^shop/([1-9][0-9]*)$', views.shop, name='shop'),

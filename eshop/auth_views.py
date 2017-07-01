@@ -7,6 +7,7 @@ from .models import Webuser
 
 def login(request):
     return render(request, 'login.html')
+
 def authenticate(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -15,8 +16,10 @@ def authenticate(request):
         return redirect('login')
     auth.login(request, user)
     return redirect('index')
+
 def signup(request):
     return render(request, 'signup.html')
+
 def signup_submit(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -37,3 +40,12 @@ def signup_submit(request):
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+def homepage(request):
+    return render(request, 'homepage.html')
+
+def shoppingcart(request):
+    return render(request, 'shoppingcart.html')
+
+def remittance(request):
+    return render(request, 'remittance.html')
