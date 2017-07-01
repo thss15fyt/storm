@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load bootstrap3 %} 
-{% block create %}
+{% extends 'base/base.html' %} {% load bootstrap3 %} 
+{% block create_shop %}
 {% if user.real_user.is_owner %}
 <li role="presentation">
     <a href="{% url 'create_shop' %}">创建店铺</a>

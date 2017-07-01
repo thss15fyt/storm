@@ -6,7 +6,7 @@ from .models import Webuser
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'auth/login.html')
 
 def authenticate(request):
     username = request.POST.get('username')
@@ -18,7 +18,7 @@ def authenticate(request):
     return redirect('index')
 
 def signup(request):
-    return render(request, 'signup.html')
+    return render(request, 'auth/signup.html')
 
 def signup_submit(request):
     username = request.POST.get('username')
@@ -42,10 +42,5 @@ def logout(request):
     return redirect('login')
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    return render(request, 'base/homepage.html')
 
-def shoppingcart(request):
-    return render(request, 'shoppingcart.html')
-
-def remittance(request):
-    return render(request, 'remittance.html')

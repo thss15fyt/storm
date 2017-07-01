@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django import forms
 from django.db import models
 from django.utils import timezone
 
@@ -105,14 +104,5 @@ class Comment(models.Model):
     score = models.IntegerField()
     created_at = models.DateTimeField(default = timezone.now)
 
-class ShopForm(forms.ModelForm):
-    class Meta:
-        model = Shop
-        fields = ('name', 'address', 'introduction')
-
-class GoodsForm(forms.ModelForm):
-    class Meta:
-        model = Goods
-        fields = ('name', 'price', 'introduction')
 
 
