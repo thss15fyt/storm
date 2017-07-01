@@ -81,10 +81,12 @@ class Goods(models.Model):
             related_name = 'type_goods',
             related_query_name = 'type_goods',
             null = True)
+    keywords = models.ManyToManyField('Keyword',
+            related_name = 'keyword_goods',
+            related_query_name = 'keyword_goods')
 
 class Keyword(models.Model):
     name = models.CharField(max_length = 20)
-    item = models.ManyToManyField('Goods')
 
 class GoodsImage(models.Model):
     image = models.ImageField()

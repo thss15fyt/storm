@@ -4,7 +4,7 @@
 </li>
 {% endif %} {% endblock %} {% block search %}
 <li role="presentation">
-<form method="post" action="{% url 'signup-submit' %}" style="float:left">
+<form method="post" action="{% url 'search' shop.id %}" style="float:left">
     {% csrf_token %}
     <div class="form-group" style="display:inline-block;margin-bottom:0">
         <label for="search" style="float:left;padding-top:7px">请输入搜索关键词：
@@ -20,7 +20,7 @@
     <div class="panel-heading">
         <h3>{{ shop.name}}</h3>
         <small>
-{% bootstrap_icon 'user' %}<strong>{{ shop.owner.user}}</strong>
+{% bootstrap_icon 'user' %}<strong>{{ shop.owner.ori_user }}</strong>
 {% bootstrap_icon 'time' %}<span>{{ shop.created_at}}</span>
 </small>
     </div>
@@ -31,13 +31,14 @@
 </div>
 <ul class="list-group">
     <li class="list-group-item">{{ shop.goods.count}}件商品</li>
-    {% for goods in shop.goods.all %}
+    {% for goods in shop.goods.all|dictsort:"price" %}
     <li class="list-group-item clearfix">
         <div class="word-wrap">商品名：<a href="{% url 'goods' goods.id %}">{{ goods.name }}</a></div>
         <div class="word-wrap">商品价格：{{ goods.price }}</div>
         <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
+        <div class="word-wrap">商品类型：{% for key in goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
         <div class="pull-right">
-            {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user}}</b>
+            {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user }}</b>
         </div>
     </li>
     {% endfor %}

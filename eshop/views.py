@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Shop, Goods, ShopForm, GoodsForm
+from .models import Shop, Goods, ShopForm, GoodsForm, Keyword
 
 def index(request):
     shops = Shop.objects.order_by('-created_at')
@@ -14,6 +14,12 @@ from django.shortcuts import get_object_or_404
 def shop(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
     return render(request, 'shop.html', {'shop': shop})
+
+def search(request, shop_id):
+    shop = get_object_or_404(Shop, pk=shop_id)
+    param = request.POST.get('search')
+    target_key = Keyword.objects.get(name=param)
+    return render(request, 'search.html', {'target_key': target_key, 'shop': shop})
 
 def goods(request, goods_id):
     goods = get_object_or_404(Goods, pk=goods_id)
@@ -38,11 +44,18 @@ def create_goods(request, shop_id):
     shop = get_object_or_404(Shop, pk=shop_id)
     params = request.POST if request.method == 'POST' else None
     form = GoodsForm(params)
+    keywords = request.POST.get('keywords')
+    if keywords :
+        keywords = keywords.split(',')
     if form.is_valid() and request.user.real_user.is_owner == True:
         goods = form.save(commit=False)
         goods.shop = shop
         goods.save()
-        messages.info(request, '商品《{}》创建成功'.format(shop.name))
+        for key in keywords:
+            keyword, created = Keyword.objects.get_or_create(name = key)
+            goods.keywords.add(keyword)
+            goods.save()
+        messages.info(request, '商品《{}》创建成功'.format(goods.name))
         form = GoodsForm()
 
     return render(request, 'create_goods.html', {'form': form, 'shop': shop})

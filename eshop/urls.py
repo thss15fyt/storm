@@ -12,9 +12,11 @@ urlpatterns = [
 
     url(r'^create_shop$', views.create_shop, name='create_shop'),
 
+    url(r'^shop/([1-9][0-9]*)$', views.shop, name='shop'),
+
     url(r'^shop/([1-9][0-9]*)/create_goods$', views.create_goods, name='create_goods'),
 
     url(r'^shop/([1-9][0-9]*)/goods$', views.goods, name='goods'),
 
-    url(r'^shop/([1-9][0-9]*)$', views.shop, name='shop'),
+    url(r'^shop/([1-9][0-9]*)/search$', views.search, name='search'),
 ]
