@@ -41,6 +41,6 @@ def logout(request):
     auth.logout(request)
     return redirect('login')
 
-def homepage(request):
-    return render(request, 'base/homepage.html')
+def user_info(request):
+    return render(request, 'base/user_info.html')
 

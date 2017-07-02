@@ -9,34 +9,46 @@
 </head>
 
 <body>
-    <nav>
-        <ul class="nav nav-pills pull-right" style="margin-top:12px">
-            {% if user.is_authenticated %}
-                {% block search %}{% endblock %}
-                {% block create_shop %}{% endblock %}
-                {% block create_goods %}{% endblock %}
-                <li role="presentation">
-                    <a href="{% url 'homepage' %}">个人主页</a>
-                </li>
-                <li role="presentation">
-                    <a href="{% url 'shoppingcart' %}">购物车</a>
-                </li>
-                <li role="presentation">
-                    <a href="{% url 'logout' %}">登出(<b>{{ user.username}}</b>)</a>
-                </li>
-            {% else %}
-                <li role="presentation">
-                    <a href="{% url 'login' %}">登录</a>
-                </li>
-                <li role="presentation">
-                    <a href="{% url 'signup' %}">注册</a>
-                </li>
-            {% endif %}
-        </ul>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{% url 'index' %}" title="Sales and Marketing Bootstrap Theme">
+                    <img class="logo" src="{% static 'image/logo.png' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    {% block search %}{% endblock %}
+                    <li class="active"><a href="{% url 'index' %}">HOME</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'homepage_base' %}">个人主页</a></li>
+                        <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
+                        <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">登录</a></li>
+                        <li><a href="{% url 'signup' %}">注册</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
     </nav>
+    <h3>&nbsp</h3>
+    
     <div class="container">
         <div class="header clearfix">
-            <h3 class="text-muted">E-Shop</h3></div>
+            <h3 class="text-muted">E-Shop</h3>
+        </div>
         <section id="content">{% block content %}{% endblock %}</section>
         <footer class="footer">
             <p>&copy; 2017 E-Shop</p>

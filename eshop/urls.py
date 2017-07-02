@@ -7,6 +7,7 @@ from .seller import ShopManager, GoodsManager #, ShopRemittanceManager
 urlpatterns = [
     #基本界面
     url(r'^$', views.index, name='index'),
+    url(r'^homepage_base$', views.homepage_base, name = 'homepage_base'),
     url(r'^shop/([1-9][0-9]*)$', views.shop, name='shop'),
     url(r'^shop/([1-9][0-9]*)/goods$', views.goods, name='goods'),
 
@@ -16,7 +17,7 @@ urlpatterns = [
     url(r'^signup$', auth_views.signup, name='signup'),
     url(r'^signup/submit$', auth_views.signup_submit, name='signup-submit'),
     url(r'^logout$', auth_views.logout, name='logout'),
-    url(r'^homepage$', auth_views.homepage, name='homepage'),
+    url(r'^user_info$', auth_views.user_info, name='user_info'),
 
     #消费者
     url(r'^shoppingcart$', Buy.shoppingcart, name='shoppingcart'),

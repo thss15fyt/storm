@@ -20,4 +20,6 @@ def goods(request, goods_id):
     goods = get_object_or_404(Goods, pk=goods_id)
     return render(request, 'base/goods.html', {'goods': goods})
 
+def homepage_base(request):
+    return render(request, 'base/homepage_base.html')
 
