@@ -11,7 +11,9 @@
     <tbody>
         {% for shop in shops %}
         <tr>
-            <td><a href="{% url 'shop' shop.id %}">{{shop.name}}</a>
+            <td>
+                <img src={{shop.photo}} />
+                <a href="{% url 'shop' shop.id %}">{{shop.name}}</a>
                 <div class="pull-right">
                     {% bootstrap_icon 'user' %}<b>{{shop.owner.ori_user}}</b>
                     {% bootstrap_icon 'time' %}{{shop.created_at}}

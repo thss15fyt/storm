@@ -15,6 +15,7 @@ class ShopManager:
 		if form.is_valid() and request.user.real_user.is_owner == True:
 			shop = form.save(commit=False)
 			shop.owner = request.user.real_user
+			print(shop.photo)
 			shop.save()
 			messages.info(request, '店铺《{}》创建成功'.format(shop.name))
 			form = ShopForm()

@@ -4,7 +4,7 @@ from .models import Shop, Goods, ShoppingCartItem, Remittance, RemittanceItem
 class ShopForm(forms.ModelForm):
     class Meta:
         model = Shop
-        fields = ('name', 'address', 'introduction')
+        fields = ('name', 'address', 'introduction', 'photo')
 
 class GoodsForm(forms.ModelForm):
     class Meta:
