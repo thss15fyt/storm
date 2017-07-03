@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %} {% load bootstrap3 %} {% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Search Result of {% for target_key in target_keys %}<strong>{{ target_key.name | capfirst }} </strong>:{% empty %}<strong>None</strong>{% endfor %}</h3>
+        <small>{% bootstrap_icon 'home' %}<strong> {{ shop.name }}</strong></small>
+    </div>
+    <div class="panel-body word-wrap">
+        The goods related are as follows...
+    </div>
+    <div class="panel-footer"></div>
+</div>
+{% for target_key in target_keys %}
+<ul class="list-group">
+    <li class="list-group-item">
+    {{ target_key.name | capfirst }}相关: {{ target_key.keyword_goods.count }}件商品</li>
+    {% for goods in target_key.keyword_goods.all|dictsort:"price" %}
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">商品名：<a href="{% url 'goods' goods.id %}">{{ goods.name }}</a></div>
+        <div class="word-wrap">商品价格：{{ goods.price }}</div>
+        <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
+        <div class="word-wrap">商品类型：{% for key in goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
+        <div class="pull-right">
+            {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user}}</b>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}
