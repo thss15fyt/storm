@@ -51,14 +51,14 @@ class Buy:
         return redirect('shoppingcart')
 
 
-class CostomerRemittanceManager:
+class CustomerRemittanceManager:
     def remittance(request, real_user_id):
         real_user = get_object_or_404(Webuser, pk=real_user_id)
         return render(request, 'customer/remittance.html', {'real_user' : real_user})
 
     def remittance(request, remittance_id):
         remittance = get_object_or_404(Remittance, remittance_id)
-        return render(request, 'costomer/remittance.html',
+        return render(request, 'customer/remittance.html',
             {'remittance': remittance})
 
     def create_remittance(request, goods_id):
@@ -66,7 +66,7 @@ class CostomerRemittanceManager:
         goods = get_object_or_404(Goods, pk=goods_id)
         remittance = Remittance
         item = RemittanceItem()
-        return render(request, 'costomer/create_remittance.html',
+        return render(request, 'customer/create_remittance.html',
             {'remittance': remittance})
 
 
