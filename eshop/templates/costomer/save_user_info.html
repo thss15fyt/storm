@@ -1,0 +1,18 @@
+{% extends 'base/homepage_base.html' %} {% load bootstrap3 %} {% block homepage_content %}
+<h2>修改成功</h2>
+<form method="post" action="{% url 'user_info' real_user.id %}" name='saving' style="float:left">
+    {% csrf_token %}
+</form>
+<h3><strong id="seconds">3</strong>秒内返回个人信息</h3>
+<script type="text/javascript">
+function go() {
+    document.forms['saving'].submit();
+}
+
+function timing() {
+    document.getElementById("seconds").textContent = String(parseInt(document.getElementById("seconds").textContent) - 1);
+}
+setTimeout("go()", 3900)
+setInterval("timing()", 1000)
+</script>
+{% endblock %}

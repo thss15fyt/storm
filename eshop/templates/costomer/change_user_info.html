@@ -1,0 +1,69 @@
+{% extends 'base/homepage_base.html' %} {% load bootstrap3 %} {% block homepage_content %}
+<h2>个人信息</h2>
+<form method="post" action="{% url 'save_user_info' real_user.id %}" style="float:left">
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                {% bootstrap_icon 'user' %}{{ user.username }}
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <table class="table" style="margin-bottom:0">
+                    <tbody>
+                        <tr>
+                            <td style="border-top:0">
+                                {% csrf_token %}
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="nickname" style="float:left;padding-top:7px">昵称：
+                                    </label>
+                                    <input type="text" id="nickname" name="nickname" class="form-control" placeholder="eg. 蛤、美国床破……" required style="float:left;width:400px" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% csrf_token %}
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="gender" style="float:left;padding-top:7px">性别：
+                                    </label>
+                                    <input type="text" id="gender" name="gender" class="form-control" list="gender_list" placeholder="tip: 不好意思这个没的选……" required style="float:left;width:400px" />
+                                    <datalist id="gender_list">
+                                        <option label="男" value="Male" />
+                                        <option label="女" value="Female" />
+                                    </datalist>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% csrf_token %}
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="age" style="float:left;padding-top:7px" >年龄：
+                                    </label>
+                                    <input type="number" id="age" name="age" class="form-control" placeholder="tips: 请不要暴露你的真实年龄哦……" min="1" max="150" required style="float:left;width:400px" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% csrf_token %}
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="email" style="float:left;padding-top:7px">邮箱：
+                                    </label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="tips: 填假的我们也不会去验证啦……" required style="float:left;width:400px" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </li>
+    </ul>
+</form>
+{% endblock %}
