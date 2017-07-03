@@ -2,15 +2,23 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<h3>我的购物车</h3>
 <table class="table">
     <tbody>
         {% for item in user.shoppingCart %}
         <tr>
             <td>
-            <a href = "{% url 'goods' item.shoppingitem_goods.id %}">item.shoppingitem_goods.name</a>
+            <a href = "{% url 'shop' item.shoppingitem_goods.shop.id %}">
+            {{ item.shoppingitem_goods.shop.name }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <a href = "{% url 'goods' item.shoppingitem_goods.id %}">
+            {{ item.shoppingitem_goods.name }}</a>
             </td>
             <td>
-            <p>数量：{{item.number}}</p>
+            <p>数量：{{ item.number }}</p>
             </td>
         </tr>
         {% endfor %}
