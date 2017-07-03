@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Webuser
 
 
@@ -41,6 +41,19 @@ def logout(request):
     auth.logout(request)
     return redirect('login')
 
-def user_info(request):
-    return render(request, 'base/user_info.html')
+def user_info(request, real_user_id):
+    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+    return render(request, 'base/user_info.html', {'real_user' : real_user})
 
+def change_user_info(request, real_user_id):
+    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+    return render(request, 'customer/change_user_info.html', {'real_user' : real_user})
+
+def save_user_info(request, real_user_id):
+    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+    real_user.nickname = request.POST.get("nickname")
+    real_user.gender = True if request.POST.get("gender") == "Male" else False
+    real_user.age = request.POST.get("age")
+    real_user.email = request.POST.get("email")
+    real_user.save()
+    return render(request, 'customer/save_user_info.html', {'real_user' : real_user})

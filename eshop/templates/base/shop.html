@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load bootstrap3 %}
-
+{% load humanize %}
 {% block create_goods %}
     {% if user.real_user.is_owner and shop.owner == user.real_user %}
         <li role="presentation">
@@ -30,7 +30,7 @@
         <h3>{{ shop.name}}</h3>
         <small>
 {% bootstrap_icon 'user' %}<strong>{{ shop.owner.ori_user }}</strong>
-{% bootstrap_icon 'time' %}<span>{{ shop.created_at}}</span>
+{% bootstrap_icon 'time' %}<span> {{ shop.created_at | naturaltime}}</span>
 </small>
     </div>
     <div class="panel-body word-wrap">

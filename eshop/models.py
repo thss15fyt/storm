@@ -28,8 +28,6 @@ class ShoppingCartItem(models.Model):
     owner = models.ForeignKey('Webuser',
         related_name = 'shoppingCart',
         related_query_name = 'shoppingCartItem')
-    goods = models.ForeignKey('Goods',
-            related_name = 'shoppingcart_items')
     number = models.PositiveIntegerField()
 
 class Remittance(models.Model):
@@ -57,8 +55,6 @@ class RemittanceItem(models.Model):
     remittance = models.ForeignKey('Remittance',
             related_name = 'remittance_items',
             related_query_name = 'remittance_item')
-    goods = models.ForeignKey('Goods',
-            related_name = 'remittance_items')
     number = models.PositiveIntegerField()
 
 class Type(models.Model):
@@ -71,6 +67,14 @@ class Goods(models.Model):
     name = models.CharField(max_length = 20)
     price = models.DecimalField(max_digits = 7, decimal_places = 2)
     introduction = models.TextField()
+    shoppingCartItem = models.ForeignKey('ShoppingCartItem',
+            related_name = 'shoppingitem_goods',
+            related_query_name = 'shoppingitem_goods',
+            null = True)
+    RemittanceItem = models.ForeignKey('RemittanceItem',
+            related_name = 'remittanceitem_goods',
+            related_query_name = 'remittanceitem_goods',
+            null = True)
     score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     goods_type = models.ForeignKey('Type',
             related_name = 'type_goods',
@@ -99,6 +103,3 @@ class Comment(models.Model):
     content = models.TextField()
     score = models.IntegerField()
     created_at = models.DateTimeField(default = timezone.now)
-
-
-
