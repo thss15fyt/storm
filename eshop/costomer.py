@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Shop, Goods, Keyword, RemittanceItem, RemittanceItem
-from .form import ShoppingCartItemForm
+from .models import Webuser, Shop, Goods, Keyword, ShoppingCartItem, Remittance, RemittanceItem
+from .form import ShoppingCartItemForm, RemittanceForm
 
 class Search:
     def search(request, shop_id):
@@ -27,20 +27,38 @@ class Buy:
             messages.info(request, '添加购物车成功')
         return render(request, 'base/goods.html', {'goods': goods})
 
+    def removefromcart(request, item_id):
+        ShoppingCartItem.objects.get(id=item_id).delete()
+        messages.info(request, '移除成功')
+        return redirect('shoppingcart')
+
+    def removeall(request, user_id):
+        user = Webuser.objects.get(id=user_id)
+        ShoppingCartItem.objects.filter(owner=user).delete()
+        messages.info(request, '已清除所有物品')
+        return redirect('shoppingcart')
+
+    def buyall(request, user_id):
+        print(2)
+        user = Webuser.objects.get(id=user_id)
+        return redirect('shoppingcart')
+
+
 class CostomerRemittanceManager:
-    def remittance(request):
-        return render(request, 'costomer/remittance.html')
+    def remittances(request):
+        return render(request, 'costomer/remittances.html')
+
+    def remittance(request, remittance_id):
+        remittance = get_object_or_404(Remittance, remittance_id)
+        return render(request, 'costomer/remittance.html',
+            {'remittance': remittance})
 
     def create_remittance(request, goods_id):
+        print(3)
         goods = get_object_or_404(Goods, pk=goods_id)
-        params = request.POST if request.method == 'POST' else None
-        form = ShoppingCartItemForm(params)
-        print(form.is_valid())
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.number = request.POST.get('goodsnumber')
-            item.owner = request.user.real_user
-            item.goods = goods
-            item.save()
-        return redirect('goods', goods_id)
-        return render(request, 'base/index.html')
+        remittance = Remittance
+        item = RemittanceItem()
+        return render(request, 'costomer/create_remittance.html',
+            {'remittance': remittance})
+
+

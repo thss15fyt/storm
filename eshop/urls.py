@@ -21,6 +21,10 @@ urlpatterns = [
 
     #消费者
     url(r'^shoppingcart$', Buy.shoppingcart, name='shoppingcart'),
+    url(r'^shoppingcart/removefromcart/([1-9][0-9]*)$', Buy.removefromcart, name="removefromcart"),
+    url(r'^shoppingcart/removeall/([1-9][0-9]*)$', Buy.removeall, name="removeall"),
+    url(r'^shoppingcart/buyall/([1-9][0-9]*)$', Buy.buyall, name="buyall"),
+    url(r'^remittances$', CostomerRemittanceManager.remittances, name='remittances'),
     url(r'^remittance$', CostomerRemittanceManager.remittance, name='remittance'),
     url(r'^shop/([1-9][0-9]*)/search$', Search.search, name='search'),
     url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, name='addtocart'),
