@@ -47,7 +47,6 @@ function addtocart(){
     document.goods_number.action = "{% url 'addtocart' goods.id %}";
     document.goods_number.submit();
 }
-
 function create_remittance(){
     document.goods_number.action = "{% url 'create_remittance' goods.id %}";
     document.goods_number.submit();

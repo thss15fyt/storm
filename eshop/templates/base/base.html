@@ -6,6 +6,7 @@
     <title>E-Shop</title>
     {% load static %}
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    {% block scripts %}{% endblock %}
 </head>
 
 <body>
@@ -20,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="{% url 'index' %}" title="Sales and Marketing Bootstrap Theme">
-                    <img class="logo" src="{% static 'image/logo.png' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
+                    <img class="logo" src="{% static 'image/logo.jpg' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,9 +30,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% block search %}{% endblock %}
                     {% block create_goods %}{% endblock %}
-                    <li class="active"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'homepage_base' %}">个人主页</a></li>
+                        <li><a href="{% url 'homepage_base' user.real_user.id %}">个人主页</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
                         <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
                     {% else %}

@@ -46,7 +46,6 @@ function removeall(){
     document.clearorbuy.action = "{% url 'removeall' user.id %}";
     document.clearorbuy.submit();
 }
-
 function buyall(){
     document.clearorbuy.action = "{% url 'buyall' user.id %}";
     document.clearorbuy.submit();
@@ -55,4 +54,3 @@ function buyall(){
 
 {% include 'base/messages.html' %}
 {% endblock %}
-

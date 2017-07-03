@@ -8,12 +8,19 @@ class Search:
     def search(request, shop_id):
         shop = get_object_or_404(Shop, pk=shop_id)
         param = request.POST.get('search')
-        target_key = Keyword.objects.get(name=param)
-        return render(request, 'costomer/search.html', {'target_key': target_key, 'shop': shop})
+        target_keys = Keyword.objects.filter(name__contains=param, keyword_goods__shop=shop).order_by("name")
+        ids=[]
+        for key in target_keys:
+            ids.append(key.id)
+        ids = set(ids)
+        target_keys = []
+        for Id in ids:
+            target_keys.append(get_object_or_404(Keyword, pk=Id))
+        return render(request, 'customer/search.html', {'target_keys': target_keys, 'shop': shop})
 
 class Buy:
     def shoppingcart(request):
-        return render(request, 'costomer/shoppingcart.html')
+        return render(request, 'customer/shoppingcart.html')
 
     def addtocart(request, goods_id):
         goods = get_object_or_404(Goods, pk=goods_id)
@@ -44,13 +51,14 @@ class Buy:
         return redirect('shoppingcart')
 
 
-class CostomerRemittanceManager:
-    def remittances(request):
-        return render(request, 'costomer/remittances.html')
+class CustomerRemittanceManager:
+    def remittances(request, real_user_id):
+        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        return render(request, 'customer/remittance.html', {'real_user' : real_user})
 
     def remittance(request, remittance_id):
-        remittance = get_object_or_404(Remittance, remittance_id)
-        return render(request, 'costomer/remittance.html',
+        remittance = get_object_or_404(Remittance, pk=remittance_id)
+        return render(request, 'customer/remittance.html',
             {'remittance': remittance})
 
     def create_remittance(request, goods_id):
@@ -58,7 +66,7 @@ class CostomerRemittanceManager:
         goods = get_object_or_404(Goods, pk=goods_id)
         remittance = Remittance
         item = RemittanceItem()
-        return render(request, 'costomer/create_remittance.html',
+        return render(request, 'customer/create_remittance.html',
             {'remittance': remittance})
 
 
