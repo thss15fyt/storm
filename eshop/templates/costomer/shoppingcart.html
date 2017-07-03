@@ -5,17 +5,17 @@
 <h3>我的购物车</h3>
 <table class="table">
     <tbody>
-        {% for item in user.shoppingCart %}
+        {% for item in user.real_user.shoppingCart.all %}
         <tr>
             <td>
-            <a href = "{% url 'shop' item.shoppingitem_goods.shop.id %}">
-            {{ item.shoppingitem_goods.shop.name }}</a>
+            <a href = "{% url 'shop' item.goods.shop.id %}">
+            {{ item.goods.shop.name }}</a>
             </td>
         </tr>
         <tr>
             <td>
-            <a href = "{% url 'goods' item.shoppingitem_goods.id %}">
-            {{ item.shoppingitem_goods.name }}</a>
+            <a href = "{% url 'goods' item.goods.id %}">
+            {{ item.goods.name }}</a>
             </td>
             <td>
             <p>数量：{{ item.number }}</p>
