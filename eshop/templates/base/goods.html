@@ -21,4 +21,27 @@
         <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
     </li>
 </ul>
+<div class="panel panel-default">
+    <span>
+        <strong>数量</strong>
+        <input value="1" title="请输入购买量" type="number" min="1" max="999"
+        id="goodsnumber"  name="goodsnumber">
+        <strong>件</strong>
+    </span>
+</div>
+<div class="panel panel-default">
+    <form method="post" action="{% url 'create_remittance' goods.id %}" style="float:left">{% csrf_token %}
+        <button type="submit" class="btn btn-primary" title="点击此处进一步确认购买信息">
+        立即购买
+        </button>
+    </form>
+    <form method="post" action="{% url 'addtocart' goods.id %}" style="float:left">{% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+        加入购物车
+        </button>
+    </form>
+</div>
+<hr>
+
+{% include 'base/messages.html' %}
 {% endblock %}

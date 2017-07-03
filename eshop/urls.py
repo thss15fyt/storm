@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^shoppingcart$', Buy.shoppingcart, name='shoppingcart'),
     url(r'^remittance$', CostomerRemittanceManager.remittance, name='remittance'),
     url(r'^shop/([1-9][0-9]*)/search$', Search.search, name='search'),
+    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, name='addtocart'),
+    url(r'^shop/([1-9][0-9]*)/goods/create_remittance$', CostomerRemittanceManager.create_remittance, name='create_remittance'),
 
     #销售者
     url(r'^create_shop$', ShopManager.create_shop, name='create_shop'),

@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+<h3>新订单</h3>
+<table class="table">
+    <tbody>
+        {% for item in remittance %}
+        <tr>
+            <td>
+            <a href = "{% url 'goods' item.remittanceitem_goods.id %}">
+            {{ item.remittanceitem_goods.name }}</a>
+            </td>
+            <td>
+            <p>数量：{{ item.number }}</p>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<form method="post" action="{% url 'pay' remittance.id %}">{% csrf_token %}
+    <button type="submit" class="btn btn-primary" title="点击此处前往付款界面">
+    付款
+    </button>
+</form>
+{% include 'base/messages.html' %}
+{% endblock %}
