@@ -2,57 +2,19 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<h3>我的购物车</h3>
 <table class="table">
     <tbody>
-        {% for item in user.real_user.shoppingCart.all %}
+        {% for item in user.shoppingCart %}
         <tr>
             <td>
-            <a href = "{% url 'shop' item.goods.shop.id %}">
-            {{ item.goods.shop.name }}</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            <a href = "{% url 'goods' item.goods.id %}">
-            {{ item.goods.name }}</a>
+            <a href = "{% url 'goods' item.shoppingitem_goods.id %}">item.shoppingitem_goods.name</a>
             </td>
             <td>
-            <p>数量：{{ item.number }}</p>
-            </td>
-            <td>
-            <p>价格：{{ item.number }} * {{ item.goods.price }}</p>
-            </td>
-            <td>
-            <a href = "{% url 'removefromcart' item.id %}">移除</a>
+            <p>数量：{{item.number}}</p>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<form name="clearorbuy" method="post">{% csrf_token %}
-    <button type="button" class="btn btn-primary"
-            onclick="removeall()">
-    一键清空
-    </button>
-    <button type="button" class="btn btn-primary"
-            onclick="buyall()">
-    全部购买
-    </button>
-</form>
-
-<script type="text/javascript">
-function removeall(){
-    document.clearorbuy.action = "{% url 'removeall' user.id %}";
-    document.clearorbuy.submit();
-}
-
-function buyall(){
-    document.clearorbuy.action = "{% url 'buyall' user.id %}";
-    document.clearorbuy.submit();
-}
-</script>
-
-{% include 'base/messages.html' %}
 {% endblock %}
 
