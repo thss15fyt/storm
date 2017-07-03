@@ -1,0 +1,22 @@
+{% extends 'base/homepage_base.html' %}
+{% load bootstrap3 %}
+
+{% block homepage_content %}
+<h2>我的订单</h2>
+<table class="table">
+    <tbody>
+        {% for remittance in user.remittances.all %}
+        <tr>
+            <td>
+            <a href = "{% url 'remittance' remittance.id %}">
+                订单编号{{remittance.id}}
+            </a>
+            </td>
+            <td>
+            创建时间{{remittance.created_at}}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

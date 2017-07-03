@@ -2,18 +2,32 @@
 {% load bootstrap3 %}
 
 {% block homepage_content %}
-<h2>我的订单</h2>
+<h2>订单编号{{remittance.id}}</h2>
 <table class="table">
     <tbody>
-        {% for item in user.remittances %}
+        {% for item in remittance.remittance_items.all %}
         <tr>
             <td>
-            <a href = "{% url 'index' %}">
-                订单{{item.id}}
-            </a>
+            <a href = "{% url 'goods' item.goods.id %}">
+            {{ item.goods.name }}</a>
+            </td>
+            <td>
+            <p>数量：{{ item.number }}</p>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<ul class="list-group">
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">：商家：{{ remittance.shop.name }}</div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">送货地址：{{ remittance.address }}</div>
+    </li>
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">你的留言：{{ remittance.message }}</div>
+    </li>
+</ul>
 {% endblock %}
