@@ -17,12 +17,12 @@ class Buy:
 
     def addtocart(request, goods_id):
         goods = get_object_or_404(Goods, pk=goods_id)
+        print(goods_id)
         params = request.POST if request.method == 'POST' else None
         form = ShoppingCartItemForm(params)
         print(form.is_valid())
         if form.is_valid():
             item = form.save(commit=False)
-            item.number = request.POST.get('goodsnumber')
             item.owner = request.user.real_user
             item.shoppingitem_goods = goods
             item.save()
