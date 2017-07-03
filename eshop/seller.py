@@ -8,19 +8,18 @@ from .models import Shop, Goods, Webuser, Keyword
 
 class ShopManager:
 
-	@login_required
-	def create_shop(request):
-		params = request.POST if request.method == 'POST' else None
-		form = ShopForm(params)
-		if form.is_valid() and request.user.real_user.is_owner == True:
-			shop = form.save(commit=False)
-			shop.owner = request.user.real_user
-			shop.save()
-			messages.info(request, '店铺《{}》创建成功'.format(shop.name))
-			form = ShopForm()
+    @login_required
+    def create_shop(request):
+        params = request.POST if request.method == 'POST' else None
+        form = ShopForm(params)
+        if form.is_valid() and request.user.real_user.is_owner == True:
+            shop = form.save(commit=False)
+            shop.owner = request.user.real_user
+            shop.save()
+            messages.info(request, '店铺《{}》创建成功'.format(shop.name))
+            form = ShopForm()
+        return render(request, 'seller/create_shop.html', {'form': form})
 
-		return render(request, 'seller/create_shop.html', {'form': form})
-    
     @login_required
     def my_shop(request, real_user_id):
         shops = Shop.objects.filter(owner = request.user.real_user).order_by('-created_at')

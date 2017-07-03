@@ -20,7 +20,7 @@ class Search:
 
 class Buy:
     def shoppingcart(request):
-        return render(request, 'costomer/shoppingcart.html')
+        return render(request, 'customer/shoppingcart.html')
 
     def addtocart(request, goods_id):
         goods = get_object_or_404(Goods, pk=goods_id)
@@ -52,12 +52,12 @@ class Buy:
 
 
 class CustomerRemittanceManager:
-    def remittance(request, real_user_id):
+    def remittances(request, real_user_id):
         real_user = get_object_or_404(Webuser, pk=real_user_id)
         return render(request, 'customer/remittance.html', {'real_user' : real_user})
 
     def remittance(request, remittance_id):
-        remittance = get_object_or_404(Remittance, remittance_id)
+        remittance = get_object_or_404(Remittance, pk=remittance_id)
         return render(request, 'customer/remittance.html',
             {'remittance': remittance})
 

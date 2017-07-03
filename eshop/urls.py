@@ -24,8 +24,15 @@ urlpatterns = [
 
     #消费者
     url(r'^shoppingcart$', Buy.shoppingcart, name='shoppingcart'),
-    url(r'^homepage_base/([1-9][0-9]*)/remittance$', CustomerRemittanceManager.remittance, name='remittance'),
+    url(r'^shoppingcart/removefromcart/([1-9][0-9]*)$', Buy.removefromcart, name="removefromcart"),
+    url(r'^shoppingcart/removeall/([1-9][0-9]*)$', Buy.removeall, name="removeall"),
+    url(r'^shoppingcart/buyall/([1-9][0-9]*)$', Buy.buyall, name="buyall"),
+    url(r'^remittance$', CustomerRemittanceManager.remittance, name='remittance'),
     url(r'^shop/([1-9][0-9]*)/search$', Search.search, name='search'),
+    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, name='addtocart'),
+    url(r'^shop/([1-9][0-9]*)/goods/create_remittance$', CustomerRemittanceManager.create_remittance, name='create_remittance'),
+    url(r'^homepage_base/([1-9][0-9]*)/remittance$', CustomerRemittanceManager.remittances, name='remittance'),
+    
 
     #销售者
     url(r'^homepage_base/([1-9][0-9]*)/my_shop$', ShopManager.my_shop, name='my_shop'),
