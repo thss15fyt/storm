@@ -30,6 +30,7 @@
         {% endfor %}
     </tbody>
 </table>
+<h4>总价 : {{price}}</h4>
 <form name="clearorbuy" method="post">{% csrf_token %}
     <button type="button" class="btn btn-primary"
             onclick="removeall()">
@@ -47,7 +48,7 @@ function removeall(){
     document.clearorbuy.submit();
 }
 function buyall(){
-    document.clearorbuy.action = "{% url 'buyall' user.id %}";
+    document.clearorbuy.action = "{% url 'buyall' %}";
     document.clearorbuy.submit();
 }
 </script>

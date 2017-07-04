@@ -3,9 +3,12 @@
 {% block content %}
 
 <h3>新订单</h3>
+{% for shop in shops %}
+<h5>店铺{{shop.name}}</h5>
 <table class="table">
     <tbody>
-        {% for item in remittance.all %}
+        {% for item in user.real_user.shoppingCart.all %}
+        {% if item.goods.shop == shop %}
         <tr>
             <td>
             <a href = "{% url 'goods' item.goods.id %}">
@@ -15,12 +18,12 @@
             <p>数量：{{ item.number }}</p>
             </td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>
-
 <div>
-    <form method="post" action="{% url 'remittance' shop.id %}">
+    <form method="post" action="{% url 'create_remittance_shop' shop.id %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="phone">联系方式
@@ -37,14 +40,11 @@
         </label>
         <input type="text" id="message" name="message" class="form-control" placeholder="有特殊的要求可在此处给卖家留言" required />
     </div>
-    {% buttons submit='提交' %}{% endbuttons %}
+    <button type="submit" class="btn btn-primary">提交订单</button>
     </form>
+    <hr>
 </div>
+{% endfor %}
 
-<form method="post" action="{% url 'pay' remittance.id %}">{% csrf_token %}
-    <button type="submit" class="btn btn-primary" title="点击此处前往付款界面">
-    付款
-    </button>
-</form>
 {% include 'base/messages.html' %}
 {% endblock %}
