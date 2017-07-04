@@ -6,7 +6,12 @@ from .form import ShopForm, GoodsForm
 from .models import Shop, Goods, Webuser, Keyword
 
 
-class ShopManager:
+class ShopManager:    
+    @login_required
+    def my_shop(request, real_user_id):
+        shops = Shop.objects.filter(owner = request.user.real_user).order_by('-created_at')
+        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        return render(request, 'seller/my_shop.html', {'shops': shops, 'real_user': real_user})
 
     @login_required
     def create_shop(request):
@@ -18,19 +23,33 @@ class ShopManager:
             shop.save()
             messages.info(request, '店铺《{}》创建成功'.format(shop.name))
             form = ShopForm()
-        return render(request, 'seller/create_shop.html', {'form': form})
 
-    @login_required
-    def my_shop(request, real_user_id):
-        shops = Shop.objects.filter(owner = request.user.real_user).order_by('-created_at')
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'seller/my_shop.html', {'shops': shops, 'real_user': real_user})
+        return render(request, 'seller/create_shop.html', {'form': form})
         
     @login_required
-    def shop_remittance(request, real_user_id):
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'seller/shop_remittance.html', {'real_user': real_user})
+    def shop_remittance(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_remittance.html', {'shop' : shop})
 
+    def shop_info(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_info.html', {'shop' : shop})
+
+    def change_shop_info(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/change_shop_info.html', {'shop' : shop})
+
+    def save_shop_info(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        shop.name = request.POST.get("name")
+        shop.address = request.POST.get("address")
+        shop.introduction = request.POST.get("introduction")
+        shop.save()
+        return render(request, 'seller/save_shop_info.html', {'shop' : shop})
+
+    def shop_goods(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_goods.html', {'shop' : shop})
 
 class GoodsManager:
 

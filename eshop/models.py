@@ -100,4 +100,3 @@ class Comment(models.Model):
     score = models.IntegerField()
     created_at = models.DateTimeField(default = timezone.now)
 
-

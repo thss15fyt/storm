@@ -56,10 +56,9 @@ class CustomerRemittanceManager:
         real_user = get_object_or_404(Webuser, pk=real_user_id)
         return render(request, 'customer/remittance.html', {'real_user' : real_user})
 
-    def remittance(request, remittance_id):
-        remittance = get_object_or_404(Remittance, pk=remittance_id)
-        return render(request, 'customer/remittance.html',
-            {'remittance': remittance})
+    def remittance(request, real_user_id):
+        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        return render(request, 'customer/remittance.html', {'real_user' : real_user})
 
     def create_remittance(request, goods_id):
         print(3)
@@ -68,5 +67,4 @@ class CustomerRemittanceManager:
         item = RemittanceItem()
         return render(request, 'customer/create_remittance.html',
             {'remittance': remittance})
-
 
