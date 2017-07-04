@@ -29,10 +29,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {% block search %}{% endblock %}
-                    {% block create_goods %}{% endblock %}
                     <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'homepage_base' user.real_user.id %}">个人主页</a></li>
+                        <li><a href="{% url 'homepage' user.real_user.id %}">个人主页</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
                         <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
                     {% else %}

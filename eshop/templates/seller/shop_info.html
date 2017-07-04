@@ -1,43 +1,45 @@
-{% extends 'customer/homepage.html' %}
+{% extends 'seller/shop_homepage.html' %}
 {% load bootstrap3 %}
 
 {% block homepage_content %}
-<h2>个人信息</h2>
+<h2>店铺信息</h2>
 <ul class="list-group">
     <li class="list-group-item clearfix">
         <div class="word-wrap">
-        {% bootstrap_icon 'user' %}{{ user.username }}
+        {% bootstrap_icon 'home' %} {{ shop.name }}
         </div>
     </li>
     <li class="list-group-item clearfix">
         <div class="word-wrap">
         <table class="table" style="margin-bottom:0">
             <tbody>
-
                 <tr>
-                    <td style="border-top:0">昵称：{{ real_user.nickname }}
+                    <td style="border-top:0">店主：{{ shop.owner.ori_user.username }}
                     </td>
                 </tr>
                 <tr>
-                    <td>性别：{% if real_user.gender %}Male{% else %}Female{% endif %}
+                    <td>地址：{{ shop.address }}
                     </td>
                 </tr>
                 <tr>
-                    <td>年龄：{{ real_user.age }}
+                    <td>评分：{{ shop.score }}
                     </td>
                 </tr>
                 <tr>
-                    <td>邮件地址：{{ real_user.email }}
+                    <td>创建日期：{{ shop.create_at }}
                     </td>
                 </tr>
-
+                <tr>
+                    <td>店铺简介：{{ shop.introduction }}
+                    </td>
+                </tr>
             </tbody>
         </table>
         </div>
     </li>
     <li class="list-group-item clearfix">
         <div class="pull-right">
-        <a href="{% url 'change_user_info' real_user.id %}">修改个人信息</a>
+        <a href="{% url 'change_shop_info' shop.id %}">修改店铺信息</a>
         </div>
     </li>
 </ul>
