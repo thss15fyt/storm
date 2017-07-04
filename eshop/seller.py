@@ -6,8 +6,7 @@ from .form import ShopForm, GoodsForm
 from .models import Shop, Goods, Webuser, Keyword
 
 
-class ShopManager:
-    
+class ShopManager:    
     @login_required
     def my_shop(request, real_user_id):
         shops = Shop.objects.filter(owner = request.user.real_user).order_by('-created_at')

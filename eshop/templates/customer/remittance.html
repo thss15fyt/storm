@@ -5,11 +5,11 @@
 <h2>我的订单</h2>
 <table class="table">
     <tbody>
-        {% for item in user.remittances %}
+        {% for remittance in real_user.remittances.all %}
         <tr>
             <td>
             <a href = "{% url 'index' %}">
-                订单{{item.id}}
+                订单{{remittance.id}}
             </a>
             </td>
         </tr>

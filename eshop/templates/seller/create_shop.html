@@ -4,24 +4,29 @@
 {% include 'base/messages.html' %}
 <h3>创建店铺</h3>
 <div>
-<form method="post" action="{% url 'create_shop' %}">
-{% csrf_token %}
-<div class="form-group">
-<label for="name">店铺名称
-</label>
-<input type="text" id="name" name="name" class="form-control" placeholder="Name" required />
-</div>
-<div class="form-group">
-<label for="address">店铺地址
-</label>
-<input type="text" id="address" name="address" class="form-control" placeholder="Address" required />
-</div>
-<div class="form-group">
-<label for="introduction">店铺简介
-</label>
-<textarea id="introduction" name="introduction" class="form-control" placeholder="Introduction" style="height:300px;" required></textarea>
-</div>
-{% buttons submit='提交' %}{% endbuttons %}
-</form>
+    <form method="post" action="{% url 'create_shop' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">店铺名称
+        </label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required />
+    </div>
+    <div class="form-group">
+        <label for="address">店铺地址
+        </label>
+        <input type="text" id="address" name="address" class="form-control" placeholder="Address" required />
+    </div>
+    <div class="form-group">
+        <label for="introduction">店铺简介
+        </label>
+        <textarea id="introduction" name="introduction" class="form-control" placeholder="Introduction" style="height:300px;" required></textarea>
+    </div>
+    <div class="form-group">
+		<label for="image">店铺图片
+		</label>
+		<input type="file" accept="image/jpg, image/jpeg" id="photo" name="photo" /> 
+    </div>
+    {% buttons submit='提交' %}{% endbuttons %}
+    </form>
 </div>
 {% endblock %}

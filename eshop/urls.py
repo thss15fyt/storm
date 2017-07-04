@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^homepage/([1-9][0-9]*)$', views.homepage, name = 'homepage'),
     url(r'^shop/([1-9][0-9]*)$', views.shop, name='shop'),
     url(r'^shop/([1-9][0-9]*)/goods$', views.goods, name='goods'),
-    url(r'^shop_homepage/([1-9][0-9]*)$', views.shop_homepage, name = 'shop_homepage'),  
+    url(r'^shop_homepage/([1-9][0-9]*)$', views.shop_homepage, name = 'shop_homepage'),
 
     #用户管理
     url(r'^login$', auth_views.login, name='login'),
@@ -25,7 +25,13 @@ urlpatterns = [
 
     #消费者
     url(r'^shoppingcart$', Buy.shoppingcart, name='shoppingcart'),
+    url(r'^shoppingcart/removefromcart/([1-9][0-9]*)$', Buy.removefromcart, name="removefromcart"),
+    url(r'^shoppingcart/removeall/([1-9][0-9]*)$', Buy.removeall, name="removeall"),
+    url(r'^shoppingcart/buyall/([1-9][0-9]*)$', Buy.buyall, name="buyall"),
+    url(r'^remittance$', CustomerRemittanceManager.remittance, name='remittance'),
     url(r'^homepage/([1-9][0-9]*)/remittance$', CustomerRemittanceManager.remittance, name='remittance'),
+    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, name='addtocart'),
+    url(r'^shop/([1-9][0-9]*)/goods/create_remittance$', CustomerRemittanceManager.create_remittance, name='create_remittance'),
     url(r'^shop/([1-9][0-9]*)/search$', Search.search, name='search'),
 
     #销售者
