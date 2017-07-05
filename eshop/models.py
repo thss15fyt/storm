@@ -21,7 +21,6 @@ class Shop(models.Model):
     introduction = models.TextField()
     photo = models.ImageField(blank = True)
     address = models.CharField(max_length = 255)
-    score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     created_at = models.DateTimeField(default = timezone.now)
 
 class ShoppingCartItem(models.Model):
@@ -60,7 +59,7 @@ class RemittanceItem(models.Model):
             related_name = 'remittance_items',
             related_query_name = 'remittance_item')
     goods = models.ForeignKey('Goods',
-            related_name = 'remittance_items')
+            related_name = 'remittance_item')
     number = models.PositiveIntegerField()
 
 class Type(models.Model):
