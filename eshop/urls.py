@@ -2,7 +2,8 @@ from django.conf.urls import url
 from . import views, auth_views
 from .customer import Search, Buy, CustomerRemittanceManager
 from .seller import ShopManager, GoodsManager #, ShopRemittanceManager
-#from .manager import ...
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     #基本界面
@@ -24,27 +25,27 @@ urlpatterns = [
     url(r'^homepage/([1-9][0-9]*)/user_info/save_user_info$', auth_views.save_user_info, name='save_user_info'),
 
     #消费者
-    url(r'^shoppingcart$', Buy.shoppingcart, 
+    url(r'^shoppingcart$', Buy.shoppingcart,
         name='shoppingcart'),
-    url(r'^shoppingcart/removefromcart/([1-9][0-9]*)$', Buy.removefromcart, 
+    url(r'^shoppingcart/removefromcart/([1-9][0-9]*)$', Buy.removefromcart,
         name="removefromcart"),
-    url(r'^shoppingcart/removeall/([1-9][0-9]*)$', Buy.removeall, 
+    url(r'^shoppingcart/removeall/([1-9][0-9]*)$', Buy.removeall,
         name="removeall"),
-    url(r'^shoppingcart/buyall/$', Buy.buyall, 
+    url(r'^shoppingcart/buyall/$', Buy.buyall,
         name="buyall"),
-    url(r'^remittance$', CustomerRemittanceManager.remittance, 
+    url(r'^remittance$', CustomerRemittanceManager.remittance,
         name='remittance'),
-    url(r'^search$', Search.search, 
+    url(r'^search$', Search.search,
         name='search'),
-    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, 
+    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart,
         name='addtocart'),
-    url(r'^create_remittance_shop/([1-9][0-9]*)$', CustomerRemittanceManager.create_remittance_shop, 
+    url(r'^create_remittance_shop/([1-9][0-9]*)$', CustomerRemittanceManager.create_remittance_shop,
         name='create_remittance_shop'),
-    url(r'^goods/([1-9][0-9]*)/create_remittance$', CustomerRemittanceManager.create_remittance_goods, 
+    url(r'^goods/([1-9][0-9]*)/create_remittance$', CustomerRemittanceManager.create_remittance_goods,
         name='create_remittance_goods'),
-    url(r'^homepage/([1-9][0-9]*)/remittances$', CustomerRemittanceManager.remittances, 
+    url(r'^homepage/([1-9][0-9]*)/remittances$', CustomerRemittanceManager.remittances,
         name='remittances'),
-    
+
     #销售者
     url(r'^homepage/([1-9][0-9]*)/my_shop$', ShopManager.my_shop, name='my_shop'),
     url(r'^create_shop$', ShopManager.create_shop, name='create_shop'),
@@ -54,7 +55,9 @@ urlpatterns = [
     url(r'^shop_homepage/([1-9][0-9]*)/shop_info/save_shop_info$', ShopManager.save_shop_info, name='save_shop_info'),
     url(r'^shop_homepage/([1-9][0-9]*)/shop_goods$', ShopManager.shop_goods, name='shop_goods'),
     url(r'^shop_homepage/([1-9][0-9]*)/shop_remittance$', ShopManager.shop_remittance, name='shop_remittance'),
-
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_goods/change_goods_info$', GoodsManager.change_goods_info,
+        name='change_goods_info'),
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_goods/save_goods_info$', GoodsManager.save_goods_info, name='save_goods_info'),
     #管理者
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

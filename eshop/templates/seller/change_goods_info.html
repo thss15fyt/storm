@@ -1,12 +1,12 @@
 {% extends 'seller/shop_homepage.html' %}
 {% load bootstrap3 %}
 {% block homepage_content %}
-<h2>店铺信息</h2>
-<form method="post" enctype="multipart/form-data" action="{% url 'save_shop_info' shop.id %}" style="float:left">
+<h2>商品信息</h2>
+<form method="post" enctype="multipart/form-data" action="{% url 'save_goods_info' goods.id %}" style="float:left">
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <div class="word-wrap">
-                {% bootstrap_icon 'home' %}{{ shop.name }}
+                {% bootstrap_icon 'home' %}{{ goods.name }}
             </div>
         </li>
         <li class="list-group-item clearfix">
@@ -19,7 +19,7 @@
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="name" style="float:left;padding-top:7px">名称：
                                     </label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="eg. 蛤、美国床破……" required style="float:left;width:400px" />
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="输入修改的商品名" value="{{ goods.name }}" required style="float:left;width:400px" />
                                 </div>
                             </td>
                         </tr>
@@ -27,26 +27,19 @@
                             <td>
                                 {% csrf_token %}
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
-                                    <label for="address" style="float:left;padding-top:7px">地址：
+                                    <label for="price" style="float:left;padding-top:7px">价格：
                                     </label>
-                                    <input type="text" id="address" name="address" class="form-control" placeholder="tip: 不好意思这个没的选……" required style="float:left;width:400px" />
+                                    <input type="number" id="price" name="price" class="form-control" value="{{ goods.price }}" required style="float:left;width:400px" />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
-                                    <label for="introduction" style="float:left;padding-top:7px" >店铺简介：
+                                    <label for="introduction" style="float:left;padding-top:7px" >商品简介：
                                     </label>
                                     <textarea id="introduction" name="introduction" class="form-control" required style="float:left;width:370px"></textarea>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% csrf_token %}
-                                <label for="photo" style="float:left;padding-top:7px">店铺图片：</label>
-                                <input type="file" id="photo" name="photo" required style="float:left;width:400px" />
                             </td>
                         </tr>
                     </tbody>

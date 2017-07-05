@@ -28,6 +28,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    <li>{% if user.real_user.photo %}<img src="{{user.real_user.photo.url}}" width="40px" height="40px" style="margin-top:5px;margin-right:10px;border-radius:5px">{% endif %}</li>
                     <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'homepage' user.real_user.id %}">个人主页</a></li>

@@ -47,7 +47,7 @@ def user_info(request, real_user_id):
 
 def change_user_info(request, real_user_id):
     real_user  = get_object_or_404(Webuser, pk = real_user_id)
-    return render(request, 'customer/change_user_info.html', {'real_user' : real_user})
+    return render(request, 'customer/change_user_info.html', {'real_user': real_user})
 
 def save_user_info(request, real_user_id):
     real_user  = get_object_or_404(Webuser, pk = real_user_id)
@@ -55,5 +55,8 @@ def save_user_info(request, real_user_id):
     real_user.gender = True if request.POST.get("gender") == "Male" else False
     real_user.age = request.POST.get("age")
     real_user.email = request.POST.get("email")
+    if real_user.photo:
+        real_user.photo.delete()
+    real_user.photo = request.FILES.get("photo")
     real_user.save()
-    return render(request, 'customer/save_user_info.html', {'real_user' : real_user})
+    return render(request, 'customer/save_user_info.html', {'real_user': real_user})

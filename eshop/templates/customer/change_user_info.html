@@ -1,6 +1,8 @@
-{% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
+{% extends 'customer/homepage.html' %}
+{% load bootstrap3 %}
+{% block homepage_content %}
 <h2>个人信息</h2>
-<form method="post" action="{% url 'save_user_info' real_user.id %}" style="float:left">
+<form method="post" enctype="multipart/form-data" action="{% url 'save_user_info' real_user.id %}" style="float:left">
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <div class="word-wrap">
@@ -17,7 +19,7 @@
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="nickname" style="float:left;padding-top:7px">昵称：
                                     </label>
-                                    <input type="text" id="nickname" name="nickname" class="form-control" placeholder="eg. 蛤、美国床破……" required style="float:left;width:400px" />
+                                    <input type="text" value = "{{ user.username }}" id="nickname" name="nickname" class="form-control" " required style="float:left;width:400px" />
                                 </div>
                             </td>
                         </tr>
@@ -41,7 +43,7 @@
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="age" style="float:left;padding-top:7px" >年龄：
                                     </label>
-                                    <input type="number" id="age" name="age" class="form-control" placeholder="tips: 请不要暴露你的真实年龄哦……" min="1" max="150" required style="float:left;width:400px" />
+                                    <input type="number" id="age" name="age" class="form-control" value="{{ user.real_user.age }}" min="1" max="150" required style="float:left;width:400px" />
                                 </div>
                             </td>
                         </tr>
@@ -51,8 +53,16 @@
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="email" style="float:left;padding-top:7px">邮箱：
                                     </label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="tips: 填假的我们也不会去验证啦……" required style="float:left;width:400px" />
+                                    <input type="email" value="{{ user.real_user.email }}" id="email" name="email" class="form-control" placeholder="tips: 填假的我们也不会去验证啦……" required style="float:left;width:400px" />
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% csrf_token %}
+                                <label for="photo" style="float:left;padding-top:7px">头像：
+                                </label>
+                                <input type="file" id="photo" name="photo" required style="float:left;width:400px" />
                             </td>
                         </tr>
                     </tbody>

@@ -10,7 +10,7 @@ class Webuser(models.Model):
     nickname = models.CharField(max_length=20)
     gender = models.BooleanField()
     age = models.IntegerField()
-    photo = models.ImageField(blank = True)
+    photo = models.ImageField(blank = True, upload_to = 'userphoto')
     email = models.EmailField(blank = True)
 
 class Shop(models.Model):
@@ -19,7 +19,7 @@ class Shop(models.Model):
             related_query_name = 'shop')
     name = models.CharField(max_length=20)
     introduction = models.TextField()
-    photo = models.ImageField(blank = True)
+    photo = models.ImageField(blank = True, upload_to = 'shopphoto')
     address = models.CharField(max_length = 255)
     score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     created_at = models.DateTimeField(default = timezone.now)
@@ -84,7 +84,7 @@ class Keyword(models.Model):
     name = models.CharField(max_length = 20)
 
 class GoodsImage(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to = 'goodsphoto')
     goods = models.ForeignKey('Goods',
             related_name = 'goods_images',
             related_query_name = 'goods_image')

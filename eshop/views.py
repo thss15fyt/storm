@@ -32,5 +32,5 @@ def homepage(request, real_user_id):
 #商店主页
 def shop_homepage(request, shop_id):
     shop = get_object_or_404(Shop, pk = shop_id)
-    return render(request, 'seller/shop_homepage.html', {'shop': shop})
+    return render(request, 'seller/shop_info.html', {'shop': shop})
 

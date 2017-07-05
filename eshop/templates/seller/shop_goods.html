@@ -12,6 +12,11 @@
             {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user }}</b>
         </div>
     </li>
+    <li class="list-group-item clearfix">
+        <div class="pull-right">
+        <a href="{% url 'change_goods_info' goods.id %}">修改商品信息</a>
+        </div>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}
