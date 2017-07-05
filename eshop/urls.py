@@ -31,7 +31,6 @@ urlpatterns = [
     url(r'^remittance$', CustomerRemittanceManager.remittance, name='remittance'),
     url(r'^homepage/([1-9][0-9]*)/remittance$', CustomerRemittanceManager.remittance, name='remittance'),
     url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart, name='addtocart'),
-    url(r'^shop/([1-9][0-9]*)/goods/create_remittance$', CustomerRemittanceManager.create_remittance, name='create_remittance'),
     url(r'^shop/([1-9][0-9]*)/search$', Search.search, name='search'),
 
     #销售者
