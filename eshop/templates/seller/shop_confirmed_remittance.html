@@ -3,12 +3,10 @@
 <table class="table">
     <tbody>
         {% for remittance in shop.remittances.all %}
-        {% if remittance.status == 'c' %}
+        {% if remittance.status == 't' %}
         <tr>
             <td>
                 <ul class="list-group">
-                    <form method="post" action="{% url 'shop_confirm_remittance' remittance.id %}" >
-                    {% csrf_token %}
                     <li class="list-group-item">{{ remittance.remittance_items.count }}种商品</li>
                     {% for item in remittance.remittance_items.all %}
                     <li class="list-group-item clearfix">
@@ -17,7 +15,6 @@
                         <div class="word-wrap">商品类型：{% for key in item.goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
                     </li>
                     {% endfor %}
-                    <li class="list-group-item" style="height:56px"><button type="submit" class="btn btn-primary pull-right">发货</button></li></form>
                 </ul>
             </td>
         </tr>

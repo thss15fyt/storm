@@ -1,0 +1,30 @@
+{% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
+<h2>我的订单</h2>
+<table class="table">
+    <tbody>
+        {% for remittance in real_user.remittances.all %} {% if remittance.status == 'r' %}
+        <tr>
+            <td>
+                <form method="post" action="{% url 'customer_evaluate_remittance' remittance.id %}">
+                    {% csrf_token %}
+                    <li class="list-group-item">{{ remittance.remittance_items.count }}种商品</li>
+                    {% for item in remittance.remittance_items.all %}
+                    <li class="list-group-item clearfix">
+                        <div class="word-wrap">商品名：{{ item.goods.name }}</div>
+                        <div class="word-wrap">总价格：{{ item.goods.price }}</div>
+                        <div class="word-wrap">商品类型：{% for key in item.goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
+                        <div class="word-wrap"><p>创建评价：</p>
+                            <p style="float:left;padding-top:8px">评分：</p>
+                            <input type="number" id="score-{{item.id}}" name="score-{{item.id}}" min=0 max=5 class="form-control" placeholder="please score me..." required style="float:left;width:90%" />
+                            <textarea id="evaluation-{{item.id}}" name="evaluation-{{item.id}}" class="form-control" required style="width:100%"></textarea>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <li class="list-group-item" style="height:56px" ><button type="submit" class="btn btn-primary pull-right">确认评价</button></li>
+                </form>
+            </td>
+        </tr>
+        {% endif %} {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

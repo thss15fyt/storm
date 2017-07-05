@@ -4,5 +4,6 @@
     <li><a href="{% url 'shop_info' shop.id %}">店铺信息</a></li>
     <li><a href="{% url 'shop_goods' shop.id %}">店铺商品</a></li>
     <li><a href="{% url 'shop_remittance' shop.id %}">店铺订单</a></li>
+    <li><a href="{% url 'shop_confirmed_remittance' shop.id %}">已发货订单</a></li>
 </ul>
 {% endblock %}

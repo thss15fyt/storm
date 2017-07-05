@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.contrib import messages
 from .form import ShopForm, GoodsForm
-from .models import Shop, Goods, Webuser, Keyword
+from .models import Shop, Goods, Webuser, Keyword, Remittance
 
 
 class ShopManager:    
@@ -29,6 +29,17 @@ class ShopManager:
     @login_required
     def shop_remittance(request, shop_id):
         shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_remittance.html', {'shop' : shop})
+
+    def shop_confirmed_remittance(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_confirmed_remittance.html', {'shop' : shop})
+
+    def shop_confirm_remittance(request, remit_id):
+        remittance = get_object_or_404(Remittance, pk = remit_id)
+        shop = remittance.shop
+        remittance.status = 't'
+        remittance.save()
         return render(request, 'seller/shop_remittance.html', {'shop' : shop})
 
     def shop_info(request, shop_id):

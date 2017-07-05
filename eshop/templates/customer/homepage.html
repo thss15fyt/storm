@@ -2,7 +2,9 @@
 <h4>买家信息</h4>
 <ul class="nav nav-sidebar">
     <li><a href="{% url 'user_info' real_user.id %}">个人信息</a></li>
-    <li><a href="{% url 'remittances' real_user.id %}">我的订单</a></li>
+    <li><a href="{% url 'remittances' real_user.id %}">未完成订单</a></li>
+    <li><a href="{% url 'finished_remittances' real_user.id %}">已完成订单</a></li>
+    <li><a href="{% url 'evaluated_remittances' real_user.id %}">已评价订单</a></li>
 </ul>
 {% if real_user.is_owner %}
 <h4>卖家信息</h4>

@@ -39,11 +39,13 @@ class Remittance(models.Model):
     shop = models.ForeignKey('Shop',
             related_name = 'remittances',
             related_query_name = 'remittance')
-    status = (
-            (0, 'confirmed'),
-            (1, 'transported'),
-            (2, 'recieved'),
+    STATUS_CHOICE = (
+            ('c', 'confirmed'),
+            ('t', 'transported'),
+            ('r', 'recieved'),
+            ('e', 'evaluated')
         )
+    status = models.CharField(max_length = 1, choices=STATUS_CHOICE, default="c")
     address = models.CharField(max_length = 255)
     payment = (
             (0, 'online'),
@@ -90,13 +92,12 @@ class GoodsImage(models.Model):
             related_query_name = 'goods_image')
 
 class Comment(models.Model):
-    goods = models.ForeignKey('Goods',
-            related_name = 'comments',
-            related_query_name = 'comment')
+    item = models.OneToOneField('RemittanceItem',
+            related_name = 'comment',
+            related_query_name = 'comments')
     author = models.ForeignKey('Webuser',
-            related_name = 'comments',
-            related_query_name = 'comment')
+            related_name = 'comment',
+            related_query_name = 'comments')
     content = models.TextField()
     score = models.IntegerField()
     created_at = models.DateTimeField(default = timezone.now)
-
