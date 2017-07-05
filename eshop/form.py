@@ -20,3 +20,4 @@ class RemittanceForm(forms.ModelForm):
     class Meta:
         model = Remittance
         fields = ('address', 'phone', 'message')
+

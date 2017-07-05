@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>E-Shop</title>
+    <title>STORM</title>
     {% load static %}
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     {% block scripts %}{% endblock %}
@@ -21,18 +21,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="{% url 'index' %}" title="Sales and Marketing Bootstrap Theme">
-                    <img class="logo" src="{% static 'image/logo.jpg' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
+                    <img class="logo" src="{% static 'img/logo_1.png' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    {% block search %}{% endblock %}
-                    {% block create_goods %}{% endblock %}
                     <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'homepage_base' user.real_user.id %}">个人主页</a></li>
+                        <li><a href="{% url 'homepage' user.real_user.id %}">个人主页</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
                         <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
                     {% else %}
@@ -46,14 +44,14 @@
         <!-- /.container-fluid -->
     </nav>
     <h3>&nbsp</h3>
-
+    <div style="width:100%;height:34px">{% block search %}{% endblock %}</div>
     <div class="container">
         <div class="header clearfix">
-            <h3 class="text-muted">E-Shop</h3>
+            <h3 class="text-muted">STORM</h3>
         </div>
         <section id="content">{% block content %}{% endblock %}</section>
         <footer class="footer">
-            <p>&copy; 2017 E-Shop</p>
+            <p>&copy; 2017 STORM</p>
         </footer>
     </div>
 </body>

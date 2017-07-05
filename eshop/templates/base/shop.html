@@ -9,21 +9,6 @@
     {% endif %}
 {% endblock %}
 
-{% block search %}
-<li role="presentation">
-<form method="post" action="{% url 'search' shop.id %}" style="float:left">
-    {% csrf_token %}
-    <div class="form-group" style="display:inline-block;margin-bottom:0">
-        <label for="search" style="float:left;padding-top:7px">请输入搜索关键词：
-        </label>
-        <input type="text" id="search" name="search" class="form-control" placeholder="Keywords" required style="float:left;width:200px"/>
-        <button type="submit" class="btn btn-primary">GO
-        </button>
-    </div>
-</form>
-</li>
-{% endblock %}
-
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-heading">

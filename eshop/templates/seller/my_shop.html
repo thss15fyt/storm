@@ -1,9 +1,9 @@
-{% extends 'base/homepage_base.html' %} {% load bootstrap3 %} {% block homepage_content %}
+{% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
 <h2>我的店铺</h2>
 <ul class="list-group">
     {% for shop in shops %}
     <li class="list-group-item clearfix">
-        <a href="{% url 'shop' shop.id %}">{{shop.name}}</a> 
+        <a href="{% url 'shop_homepage' shop.id %}">{{shop.name}}</a> 
         <div class="pull-right">{% bootstrap_icon 'user' %}<b>{{shop.owner.ori_user}}</b> {% bootstrap_icon 'time' %}{{shop.created_at}}</div>
     </li>
     {% endfor %}
@@ -12,3 +12,4 @@
     </li>
 </ul>
 {% endblock %}
+
