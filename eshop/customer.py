@@ -6,10 +6,9 @@ from .form import ShoppingCartItemForm, RemittanceForm
 import decimal
 
 class Search:
-    def search(request, shop_id):
-        shop = get_object_or_404(Shop, pk=shop_id)
+    def search(request):
         param = request.POST.get('search')
-        target_keys = Keyword.objects.filter(name__contains=param, keyword_goods__shop=shop).order_by("name")
+        target_keys = Keyword.objects.filter(name__contains=param).order_by("name")
         ids=[]
         for key in target_keys:
             ids.append(key.id)
@@ -17,7 +16,7 @@ class Search:
         target_keys = []
         for Id in ids:
             target_keys.append(get_object_or_404(Keyword, pk=Id))
-        return render(request, 'customer/search.html', {'target_keys': target_keys, 'shop': shop})
+        return render(request, 'customer/search.html', {'target_keys': target_keys})
 
 class Buy:
     def shoppingcart(request):
