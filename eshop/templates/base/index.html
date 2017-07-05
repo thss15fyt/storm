@@ -2,12 +2,8 @@
 {% block scripts %}
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% endblock %}
-{% block create_shop %} {% if user.real_user.is_owner %}
-<li role="presentation">
-    <a href="{% url 'create_shop' %}">创建店铺</a>
-</li>
-{% endif %} {% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
 <div id="myCarousel" class="carousel slide">
     <!-- 轮播（Carousel）指标 -->
     <ol class="carousel-indicators">

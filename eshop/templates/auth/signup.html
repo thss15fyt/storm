@@ -16,13 +16,13 @@
         <div class="form-group">
             <label for="choice">注册为
             </label>
-            <input type="list" list="choice_list" id="choice" name="choice" class="form-control" placeholder="please select..." required />
+            <input type="text" list="choice_list" id="choice" name="choice" class="form-control" placeholder="please select..." required />
             <datalist id="choice_list">
-	    <option label="I'm a owner" value="owner" />
-	    <option label="I'm a consumer" value="consumer" />
+        	    <option label="I'm a owner" value="owner" />
+        	    <option label="I'm a consumer" value="consumer" />
+            </datalist>
         </div>
-        <button type="submit" class="btn btn-primary">注册
-        </button>
+        <button type="submit" class="btn btn-primary">注册</button>
     </form>
 </div>
 {% endblock %}
