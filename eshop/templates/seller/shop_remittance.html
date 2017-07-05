@@ -1,23 +1,11 @@
-{% extends 'base/homepage_base.html' %}
-{% load bootstrap3 %}
-{% block homepage_content %}
+{% extends 'seller/shop_homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
 <h2>店铺订单</h2>
 <table class="table">
     <tbody>
-        {% for shop in user.real_user.shops.all %}
+        {% for remittance in shop.remittances.all %}
         <tr>
             <td>
-            <table class="table">
-                <tbody>
-                    {% for remittance in shop.remittances.all %}
-                    <tr>
-                        <td>
-                        订单详情
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                订单详情
             </td>
         </tr>
         {% endfor %}
