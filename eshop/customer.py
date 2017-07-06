@@ -133,11 +133,9 @@ class CustomerRemittanceManager:
             comment.author = remittance.owner
             comment.item = item
             comment.save()
-            items = RemittanceItem.objects.filter(goods = item.goods, remittance__status = 'e')
-            sum = 0
-            for item in items:
-                sum += int(item.comment.score)
-            item.goods.score = sum / items.count()
+            item.goods.score_num += 1
+            item.goods.total_score += int(comment.score)
+            item.goods.score = item.goods.total_score / item.goods.score_num
             item.goods.save()
 
         return render(request, 'customer/finished_remittances.html', {'real_user' : remittance.owner})

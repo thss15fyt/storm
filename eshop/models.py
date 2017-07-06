@@ -72,6 +72,8 @@ class Goods(models.Model):
     name = models.CharField(max_length = 20)
     price = models.DecimalField(max_digits = 7, decimal_places = 2)
     introduction = models.TextField()
+    total_score = models.FloatField(default=0)
+    score_num = models.IntegerField(default=0)
     score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     goods_type = models.ForeignKey('Type',
             related_name = 'type_goods',
