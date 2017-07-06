@@ -99,8 +99,19 @@ class CustomerRemittanceManager:
 
         return redirect('buyall')
 
-    def create_remittance_goods(request, shop_id):
-        return redirect('index')
+    def create_remittance_goods(request, goods_id):
+        goods = get_object_or_404(Goods, pk=goods_id)
+        shoppingcartitem = ShoppingCartItem()
+        shoppingcartitem.owner = request.user.real_user
+        shoppingcartitem.goods = goods
+        shoppingcartitem.number = 1
+        shoppingcartitem.save()
+        shops = []
+        for item in request.user.real_user.shoppingCart.all():
+            if item.goods.shop not in shops:
+                shops.append(item.goods.shop)
+        return render(request, 'customer/create_remittance_fromcart.html', {'shops': shops})
+
 
     def customer_confirm_remittance(request, remit_id):
         remittance = get_object_or_404(Remittance, pk = remit_id)
