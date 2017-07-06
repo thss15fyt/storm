@@ -2,18 +2,45 @@
 {% load bootstrap3 %}
 
 {% block homepage_content %}
-<h2>我的订单</h2>
+<h3>订单详情</h3>
+<h4>店铺: {{remittance.shop.name}}</h4>
 <table class="table">
-    <tbody>
-        {% for remittance in real_user.remittances.all %}
+    <tbody>       
+        {% for item in remittance.remittance_items.all %}
         <tr>
             <td>
-            <a href = "{% url 'index' %}">
-                订单{{remittance.id}}
-            </a>
+                <a href = "{% url 'goods' item.goods.id %}">{{ item.goods.name }}</a>
             </td>
-        </tr>
+            <td>
+                <p>数量：{{ item.number }}</p>
+            </td>
+            <td>
+                <p>价格：¥{{ item.goods.price }} * {{item.number}}</p>
+            </td>
+        <tr>
         {% endfor %}
+        <tr>
+        <td></td><td></td><td>总价：¥{{remittance.price}}</td>
+        </tr>
     </tbody>
 </table>
+
+<h4>详细信息</h4>
+<table class="table">
+    <tbody> 
+        <tr><td>订单状态：{{remittance.get_status_display}}</td></tr>
+        <tr><td>联系方式：{{remittance.phone}}</td></tr>
+        <tr><td>支付方式：{{remittance.get_payment_display}}</td></tr>
+        <tr><td>地址：{{remittance.address}}</td></tr>
+        <tr><td>留言：{{remittance.message}}</td></tr>
+    </tbody>
+</table>
+
+{% if remittance.status == 2 %}
+    <button type="button" class="btn btn-primary"
+            onclick="">
+    确认收货
+    </button>
+{% endif %}
+
 {% endblock %}

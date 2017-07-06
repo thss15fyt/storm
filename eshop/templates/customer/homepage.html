@@ -1,12 +1,12 @@
 {% extends 'base/homepage_base.html' %} {% load bootstrap3 %} {% block sidebar %}
 <h4>买家信息</h4>
 <ul class="nav nav-sidebar">
-    <li><a href="{% url 'user_info' real_user.id %}">个人信息</a></li>
-    <li><a href="{% url 'remittances' real_user.id %}">我的订单</a></li>
+    <li><a href="{% url 'user_info' %}">个人信息</a></li>
+    <li><a href="{% url 'remittances' %}">我的订单</a></li>
 </ul>
 {% if real_user.is_owner %}
 <h4>卖家信息</h4>
 <ul class="nav nav-sidebar">
-    <li><a href="{% url 'my_shop' real_user.id %}">我的店铺</a></li>
+    <li><a href="{% url 'my_shop' %}">我的店铺</a></li>
 </ul>
 {% endif %} {% endblock %}

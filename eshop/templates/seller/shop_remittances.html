@@ -1,14 +1,11 @@
-{% extends 'customer/homepage.html' %}
-{% load bootstrap3 %}
-
-{% block homepage_content %}
-<h2>我的订单</h2>
+{% extends 'seller/shop_homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
+<h2>店铺订单</h2>
 <table class="table">
     <tbody>
         {% for remittance in remittances %}
         <tr>
             <td>
-            <a href = "{% url 'remittance' remittance.id %}">
+            <a href = "{% url 'shop_remittance' remittance.shop.id remittance.id %}">
                 订单编号 {{remittance.id}}
             </a>
             </td>

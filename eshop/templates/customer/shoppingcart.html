@@ -21,7 +21,7 @@
             <p>数量：{{ item.number }}</p>
             </td>
             <td>
-            <p>价格：{{ item.number }} * {{ item.goods.price }}</p>
+            <p>价格：¥{{ item.goods.price }} * {{item.number}}</p>
             </td>
             <td>
             <a href = "{% url 'removefromcart' item.id %}">移除</a>
@@ -31,9 +31,10 @@
     </tbody>
 </table>
 
-<h4>总价 : {{price}}</h4>
-
-<form name="clearorbuy" method="post">{% csrf_token %}
+{% if user.real_user.shoppingCart.all %}
+<h4>总价 : ¥{{price}}</h4>
+<form name="clearorbuy" method="post">
+    {% csrf_token %}
     <button type="button" class="btn btn-primary"
             onclick="removeall()">
     一键清空
@@ -43,6 +44,9 @@
     全部购买
     </button>
 </form>
+{% else %}
+<h4>购物车为空</h4>
+{% endif %}
 
 <script type="text/javascript">
 function removeall(){

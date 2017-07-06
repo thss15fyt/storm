@@ -41,16 +41,16 @@ def logout(request):
     auth.logout(request)
     return redirect('login')
 
-def user_info(request, real_user_id):
-    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+def user_info(request):
+    real_user  = get_object_or_404(Webuser, pk = request.user.real_user.id)
     return render(request, 'base/user_info.html', {'real_user' : real_user})
 
-def change_user_info(request, real_user_id):
-    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+def change_user_info(request):
+    real_user  = get_object_or_404(Webuser, pk = request.user.real_user.id)
     return render(request, 'customer/change_user_info.html', {'real_user' : real_user})
 
-def save_user_info(request, real_user_id):
-    real_user  = get_object_or_404(Webuser, pk = real_user_id)
+def save_user_info(request):
+    real_user  = get_object_or_404(Webuser, pk = request.user.real_user.id)
     real_user.nickname = request.POST.get("nickname")
     real_user.gender = True if request.POST.get("gender") == "Male" else False
     real_user.age = request.POST.get("age")

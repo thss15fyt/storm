@@ -25,8 +25,8 @@ def goods(request, goods_id):
     return render(request, 'base/goods.html', {'goods': goods})
 
 #个人主页
-def homepage(request, real_user_id):
-    real_user = get_object_or_404(Webuser, pk = real_user_id)
+def homepage(request):
+    real_user = get_object_or_404(Webuser, pk = request.user.real_user.id)
     return render(request, 'customer/homepage.html', {'real_user': real_user})
 
 #商店主页

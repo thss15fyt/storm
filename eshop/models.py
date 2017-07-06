@@ -23,6 +23,7 @@ class Shop(models.Model):
     address = models.CharField(max_length = 255)
     score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     created_at = models.DateTimeField(default = timezone.now)
+    sales = models.PositiveIntegerField(default = 0)
 
 class ShoppingCartItem(models.Model):
     owner = models.ForeignKey('Webuser',
@@ -39,18 +40,21 @@ class Remittance(models.Model):
     shop = models.ForeignKey('Shop',
             related_name = 'remittances',
             related_query_name = 'remittance')
-    status = (
-            (0, 'confirmed'),
-            (1, 'transported'),
-            (2, 'recieved'),
+    status_choices = (
+            (0, '已下单'),
+            (1, '运送中'),
+            (2, '已确认收货'),
         )
+    status = models.IntegerField(choices = status_choices)
     address = models.CharField(max_length = 255)
-    payment = (
-            (0, 'online'),
-            (1, 'COD'),
+    payment_choices = (
+            (0, '在线支付'),
+            (1, '货到付款'),
         )
+    payment = models.IntegerField(choices = payment_choices)
     phone = models.CharField(max_length = 20)
     message = models.CharField(max_length = 255)
+    price = models.DecimalField(max_digits = 7, decimal_places = 2)
     created_at = models.DateTimeField(default = timezone.now)
 
 class RemittanceItem(models.Model):
@@ -79,6 +83,7 @@ class Goods(models.Model):
     keywords = models.ManyToManyField('Keyword',
             related_name = 'keyword_goods',
             related_query_name = 'keyword_goods')
+    sales = models.PositiveIntegerField(default = 0)
 
 class Keyword(models.Model):
     name = models.CharField(max_length = 20)

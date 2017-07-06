@@ -3,12 +3,12 @@
 {% block content %}
 
 <h3>新订单</h3>
-{% for shop in shops %}
-<h5>店铺{{shop.name}}</h5>
+{% for group in order_groups %}
+<h5>店铺 {{group.shop.name}}</h5>
 <table class="table">
     <tbody>
         {% for item in user.real_user.shoppingCart.all %}
-        {% if item.goods.shop == shop %}
+        {% if item.goods.shop == group.shop %}
         <tr>
             <td>
             <a href = "{% url 'goods' item.goods.id %}">
@@ -17,13 +17,19 @@
             <td>
             <p>数量：{{ item.number }}</p>
             </td>
+            <td>
+            <p>价格：¥{{ item.goods.price}} * {{item.number}}</p>
+            </td>
         </tr>
         {% endif %}
         {% endfor %}
+        <tr>
+        <td></td><td></td><td>总价：¥{{group.price}}</td>
+        </tr>
     </tbody>
 </table>
 <div>
-    <form method="post" action="{% url 'create_remittance_shop' shop.id %}">
+    <form method="post" action="{% url 'create_remittance_shop' group.shop.id %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="phone">联系方式

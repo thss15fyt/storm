@@ -1,6 +1,6 @@
 {% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
 <h2>个人信息</h2>
-<form method="post" action="{% url 'save_user_info' real_user.id %}" style="float:left">
+<form method="post" action="{% url 'save_user_info' %}" style="float:left">
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <div class="word-wrap">

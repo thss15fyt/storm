@@ -30,7 +30,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'homepage' user.real_user.id %}">个人主页</a></li>
+                        <li><a href="{% url 'homepage' %}">个人主页</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
                         <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
                     {% else %}
@@ -44,11 +44,9 @@
         <!-- /.container-fluid -->
     </nav>
     <h3>&nbsp</h3>
-    <div style="width:100%;height:34px">{% block search %}{% endblock %}</div>
+    
     <div class="container">
-        <div class="header clearfix">
-            <h3 class="text-muted">STORM</h3>
-        </div>
+        <div style="width:100%;height:34px">{% block search %}{% endblock %}</div>
         <section id="content">{% block content %}{% endblock %}</section>
         <footer class="footer">
             <p>&copy; 2017 STORM</p>

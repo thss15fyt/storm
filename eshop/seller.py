@@ -3,14 +3,14 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.contrib import messages
 from .form import ShopForm, GoodsForm
-from .models import Shop, Goods, Webuser, Keyword
+from .models import Shop, Goods, Webuser, Keyword, Remittance
 
 
 class ShopManager:    
     @login_required
-    def my_shop(request, real_user_id):
+    def my_shop(request):
         shops = Shop.objects.filter(owner = request.user.real_user).order_by('-created_at')
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
         return render(request, 'seller/my_shop.html', {'shops': shops, 'real_user': real_user})
 
     @login_required
@@ -27,9 +27,17 @@ class ShopManager:
         return render(request, 'seller/create_shop.html', {'form': form})
         
     @login_required
-    def shop_remittance(request, shop_id):
+    def shop_remittances(request, shop_id):
         shop  = get_object_or_404(Shop, pk = shop_id)
-        return render(request, 'seller/shop_remittance.html', {'shop' : shop})
+        remittances = shop.remittances.all().order_by('-created_at')
+        return render(request, 'seller/shop_remittances.html', {'shop': shop, 
+            'remittances': remittances})
+
+    def shop_remittance(request, shop_id, remittance_id):
+        shop = get_object_or_404(Shop, pk = shop_id)
+        remittance = get_object_or_404(Remittance, pk = remittance_id)
+        return render(request, 'seller/shop_remittance.html', {'shop': shop,
+            'remittance': remittance})
 
     def shop_info(request, shop_id):
         shop  = get_object_or_404(Shop, pk = shop_id)

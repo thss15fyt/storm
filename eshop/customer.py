@@ -32,13 +32,11 @@ class Buy:
         if form.is_valid():
             same_items = ShoppingCartItem.objects.filter(owner=request.user.real_user,goods=goods)
             if not same_items:
-                print("not found")
                 item = form.save(commit=False)
                 item.owner = request.user.real_user
                 item.goods = goods
                 item.save()
             else:
-                print("found")
                 for same_item in same_items:
                     item = form.save(commit=False)
                     same_item.number += item.number
@@ -59,20 +57,27 @@ class Buy:
 
     def buyall(request):
         shops=[]
+        prices=[]
+        order_groups = []
         for item in request.user.real_user.shoppingCart.all():
-            if item.goods.shop not in shops:
-                shops.append(item.goods.shop)
-        return render(request, 'customer/create_remittance_fromcart.html', {'shops': shops})
-
+            sameshop_list = list(filter(lambda x: x['shop'] == item.goods.shop, order_groups))
+            if not sameshop_list:
+                order_groups.append({'shop': item.goods.shop, 
+                    'price': item.goods.price * item.number})
+            else:
+                sameshop_list[0]['price'] += item.goods.price * item.number
+                   
+        return render(request, 'customer/create_remittance_fromcart.html', {'order_groups': order_groups})
 
 class CustomerRemittanceManager:
-    def remittances(request, real_user_id):
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'customer/remittances.html', {'real_user' : real_user})
+    def remittances(request):
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+        remittances = real_user.remittances.all().order_by('-created_at')
+        return render(request, 'customer/remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
-    def remittance(request, real_user_id):
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'customer/remittance.html', {'real_user' : real_user})
+    def remittance(request, remittance_id):
+        remittance = get_object_or_404(Remittance, pk=remittance_id)
+        return render(request, 'customer/remittance.html', {'remittance': remittance})
 
     def create_remittance_shop(request, shop_id):
         shop = get_object_or_404(Shop, pk=shop_id)
@@ -84,17 +89,26 @@ class CustomerRemittanceManager:
             new_remittance.shop = shop
             new_remittance.status = 0
             new_remittance.payment = 0
+            new_remittance.price = 0
             new_remittance.save()
+            price = decimal.Decimal(0.0)
             for item in request.user.real_user.shoppingCart.all():
                 if item.goods.shop == shop:
                     remittance_item = RemittanceItem()
                     remittance_item.remittance = new_remittance
                     remittance_item.goods = item.goods
                     remittance_item.number = item.number
+                    price += item.number * item.goods.price
                     remittance_item.save()
                     item.delete()
-
-        return redirect('buyall')
+            new_remittance.price = price
+            new_remittance.save()
+        if request.user.real_user.shoppingCart.all():
+            return redirect('buyall')
+        else:
+            real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+            remittances = real_user.remittances.all().order_by('-created_at')
+            return render(request, 'customer/remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
     def create_remittance_goods(request, shop_id):
         return redirect('index')
