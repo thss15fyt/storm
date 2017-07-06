@@ -1,0 +1,27 @@
+{% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
+<h2>我的订单</h2>
+<table class="table">
+    <tbody>
+        {% for remittance in real_user.remittances.all %}
+        {% if remittance.status == 'e' %}
+        <tr>
+            <td>
+                <li class="list-group-item">{{ remittance.remittance_items.count }}种商品</li>
+                {% for item in remittance.remittance_items.all %}
+                <li class="list-group-item clearfix">
+                    <div class="word-wrap">商品名：{{ item.goods.name }}</div>
+                    <div class="word-wrap">总价格：{{ item.goods.price }}</div>
+                    <div class="word-wrap">商品类型：{% for key in item.goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
+                    <div class="word-wrap">我的评分：{{ item.comment.score }}
+                    </div>
+                    <div class="word-wrap">我的评价：{{ item.comment.content }}
+                    </div>
+                </li>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

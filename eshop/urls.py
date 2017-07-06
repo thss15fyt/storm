@@ -47,8 +47,15 @@ urlpatterns = [
         name='create_remittance_shop'),
     url(r'^goods/([1-9][0-9]*)/create_remittance$', CustomerRemittanceManager.create_remittance_goods, 
         name='create_remittance_goods'),
-   
-    
+     url(r'^homepage/([1-9][0-9]*)/finished_remittances$', CustomerRemittanceManager.finished_remittances, 
+        name='finished_remittances'),
+    url(r'^homepage/([1-9][0-9]*)/evaluated_remittances$', CustomerRemittanceManager.evaluated_remittances, 
+        name='evaluated_remittances'),
+    url(r'^remittance/([1-9][0-9]*)/customer_confirm_remittance$', CustomerRemittanceManager.customer_confirm_remittance, 
+        ame='customer_confirm_remittance'),
+    url(r'^remittance/([1-9][0-9]*)/customer_evaluate_remittance$', CustomerRemittanceManager.customer_evaluate_remittance, 
+        name='customer_evaluate_remittance'),
+
     #销售者
     url(r'^homepage/my_shop$', ShopManager.my_shop, 
         name='my_shop'),
@@ -68,6 +75,12 @@ urlpatterns = [
         name='shop_remittances'),
     url(r'^shop_homepage/([1-9][0-9]*)/shop_remittance/([1-9][0-9]*)$', ShopManager.shop_remittance,
         name='shop_remittance'),
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_confirmed_remittance$', ShopManager.shop_confirmed_remittance, 
+        name='shop_confirmed_remittance'),
+    url(r'^shop_remittance/([1-9][0-9]*)/shop_confirm_remittance$', ShopManager.shop_confirm_remittance, 
+        name='shop_confirm_remittance'),
+
     #管理者
 
 ]
+

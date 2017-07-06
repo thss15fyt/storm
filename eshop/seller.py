@@ -39,6 +39,17 @@ class ShopManager:
         return render(request, 'seller/shop_remittance.html', {'shop': shop,
             'remittance': remittance})
 
+    def shop_confirmed_remittance(request, shop_id):
+        shop  = get_object_or_404(Shop, pk = shop_id)
+        return render(request, 'seller/shop_confirmed_remittance.html', {'shop' : shop})
+
+    def shop_confirm_remittance(request, remit_id):
+        remittance = get_object_or_404(Remittance, pk = remit_id)
+        shop = remittance.shop
+        remittance.status = 't'
+        remittance.save()
+        return render(request, 'seller/shop_remittance.html', {'shop' : shop})
+
     def shop_info(request, shop_id):
         shop  = get_object_or_404(Shop, pk = shop_id)
         return render(request, 'seller/shop_info.html', {'shop' : shop})

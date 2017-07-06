@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Webuser, Shop, Goods, Keyword, ShoppingCartItem, Remittance, RemittanceItem
+from .models import Webuser, Shop, Goods, Keyword, ShoppingCartItem, Remittance, RemittanceItem, Comment
 from .form import ShoppingCartItemForm, RemittanceForm
 import decimal
 
@@ -79,6 +79,14 @@ class CustomerRemittanceManager:
         remittance = get_object_or_404(Remittance, pk=remittance_id)
         return render(request, 'customer/remittance.html', {'remittance': remittance})
 
+    def finished_remittances(request, real_user_id):
+        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        return render(request, 'customer/finished_remittances.html', {'real_user' : real_user})
+
+    def evaluated_remittances(request, real_user_id):
+        real_user = get_object_or_404(Webuser, pk=real_user_id)
+        return render(request, 'customer/evaluated_remittances.html', {'real_user' : real_user})
+
     def create_remittance_shop(request, shop_id):
         shop = get_object_or_404(Shop, pk=shop_id)
         params = request.POST if request.method == 'POST' else None
@@ -87,7 +95,6 @@ class CustomerRemittanceManager:
             new_remittance = form.save(commit=False)
             new_remittance.owner = request.user.real_user
             new_remittance.shop = shop
-            new_remittance.status = 0
             new_remittance.payment = 0
             new_remittance.price = 0
             new_remittance.save()
@@ -110,9 +117,43 @@ class CustomerRemittanceManager:
             remittances = real_user.remittances.all().order_by('-created_at')
             return render(request, 'customer/remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
-    def create_remittance_goods(request, shop_id):
-        return redirect('index')
+    def create_remittance_goods(request, goods_id):
+        goods = get_object_or_404(Goods, pk=goods_id)
+        shoppingcartitem = ShoppingCartItem()
+        shoppingcartitem.owner = request.user.real_user
+        shoppingcartitem.goods = goods
+        shoppingcartitem.number = 1
+        shoppingcartitem.save()
+        shops = []
+        for item in request.user.real_user.shoppingCart.all():
+            if item.goods.shop not in shops:
+                shops.append(item.goods.shop)
+        return render(request, 'customer/create_remittance_fromcart.html', {'shops': shops})
 
-        
-        
 
+    def customer_confirm_remittance(request, remit_id):
+        remittance = get_object_or_404(Remittance, pk = remit_id)
+        real_user = remittance.owner
+        remittance.status = 'r'
+        remittance.save()
+        return render(request, 'customer/remittances.html', {'real_user' : real_user})
+
+    def customer_evaluate_remittance(request, remittance_id):
+        remittance = get_object_or_404(Remittance, pk = remittance_id)
+        remittance.status = 'e'
+        remittance.save()
+        for item in remittance.remittance_items.all():
+            score_id = "score"+"-"+str(item.id)
+            comment_id = "evaluation"+"-"+str(item.id)
+            comment = Comment()
+            comment.score = request.POST.get(score_id)
+            comment.content = request.POST.get(comment_id)
+            comment.author = remittance.owner
+            comment.item = item
+            comment.save()
+            item.goods.score_num += 1
+            item.goods.total_score += int(comment.score)
+            item.goods.score = item.goods.total_score / item.goods.score_num
+            item.goods.save()
+
+        return render(request, 'customer/finished_remittances.html', {'real_user' : remittance.owner})
