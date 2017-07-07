@@ -4,23 +4,25 @@
 <h3>订单详情</h3>
 <table class="table">
     <tbody>
-        {% for remittance in shop.remittances.all %}
-        {% if remittance.status == 'c' %}
+        {% for item in remittance.remittance_items.all %}
         <tr>
             <td>
-                <ul class="list-group">
-                    <form method="post" action="{% url 'shop_confirm_remittance' remittance.id %}" >
-                    {% csrf_token %}
-                    <li class="list-group-item">{{ remittance.remittance_items.count }}种商品</li>
-                    {% for item in remittance.remittance_items.all %}
-                    <li class="list-group-item clearfix">
-                        <div class="word-wrap">商品名：{{ item.goods.name }}</div>
-                        <div class="word-wrap">总价格：{{ item.goods.price }}</div>
-                        <div class="word-wrap">商品类型：{% for key in item.goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
-                    </li>
-                    {% endfor %}
-                    <li class="list-group-item" style="height:56px"><button type="submit" class="btn btn-primary pull-right">发货</button></li></form>
-                </ul>
+                商品：<a href = "{% url 'goods' item.goods.id %}">{{ item.goods.name }}</a>
+            </td>
+            <td>
+                <p>数量：{{ item.number }}</p>
+            </td>
+            <td>
+                <p>价格：¥{{ item.goods.price }} * {{item.number}}</p>
+            </td>
+        <tr>
+        {% if remittance.status == 'e' %}
+        <tr>
+            <td>
+                <p>评分：{{item.comment.score}}</p>
+            </td>
+            <td>
+                <p>评价：{{item.comment.content}}</p>
             </td>
         </tr>
         {% endif %}
@@ -43,9 +45,10 @@
 </table>
 
 
-{% if remittance.status == 0 %}
-    <button type="button" class="btn btn-primary"
-            onclick="">
+{% if remittance.status == 'c' %}
+    <form method="post" action="{% url 'shop_confirm_remittance' remittance.id %}" >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">
     发货
     </button>
 {% endif %}

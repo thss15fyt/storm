@@ -79,13 +79,20 @@ class CustomerRemittanceManager:
         remittance = get_object_or_404(Remittance, pk=remittance_id)
         return render(request, 'customer/remittance.html', {'remittance': remittance})
 
-    def finished_remittances(request, real_user_id):
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'customer/finished_remittances.html', {'real_user' : real_user})
+    def finished_remittances(request):
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+        remittances = real_user.remittances.all().order_by('-created_at')
+        return render(request, 'customer/finished_remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
-    def evaluated_remittances(request, real_user_id):
-        real_user = get_object_or_404(Webuser, pk=real_user_id)
-        return render(request, 'customer/evaluated_remittances.html', {'real_user' : real_user})
+    def to_evaluate_remittances(request):
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+        remittances = real_user.remittances.all().order_by('-created_at')
+        return render(request, 'customer/to_evaluate_remittances.html', {'real_user' : real_user, 'remittances': remittances})
+
+    def to_receive_remittances(request):
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+        remittances = real_user.remittances.all().order_by('-created_at')
+        return render(request, 'customer/to_receive_remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
     def create_remittance_shop(request, shop_id):
         shop = get_object_or_404(Shop, pk=shop_id)
@@ -131,12 +138,16 @@ class CustomerRemittanceManager:
         return render(request, 'customer/create_remittance_fromcart.html', {'shops': shops})
 
 
-    def customer_confirm_remittance(request, remit_id):
-        remittance = get_object_or_404(Remittance, pk = remit_id)
+    def customer_confirm_remittance(request, remittance_id):
+        remittance = get_object_or_404(Remittance, pk = remittance_id)
         real_user = remittance.owner
         remittance.status = 'r'
         remittance.save()
-        return render(request, 'customer/remittances.html', {'real_user' : real_user})
+        return render(request, 'customer/remittance.html', {'remittance': remittance})
+
+    def evaluate_remittance(request, remittance_id):
+        remittance = get_object_or_404(Remittance, pk = remittance_id)
+        return render(request, 'customer/evaluate_remittance.html', {'remittance': remittance})
 
     def customer_evaluate_remittance(request, remittance_id):
         remittance = get_object_or_404(Remittance, pk = remittance_id)
@@ -156,4 +167,5 @@ class CustomerRemittanceManager:
             item.goods.score = item.goods.total_score / item.goods.score_num
             item.goods.save()
 
-        return render(request, 'customer/finished_remittances.html', {'real_user' : remittance.owner})
+        return render(request, 'customer/remittance.html', {'remittance': remittance})
+

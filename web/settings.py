@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'web',
         'USER': 'web-user',
         'PASSWORD':  '123456',
-        
+
     }
 }
 
@@ -125,3 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\','/')
+MEDIA_URL = '/media/'

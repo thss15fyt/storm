@@ -2,28 +2,14 @@
 <h2>我的订单</h2>
 <table class="table">
     <tbody>
-        {% for remittance in real_user.remittances.all %}
+        {% for remittance in remittances %}
         <tr>
-            <td>
-                <ul>
-                    <form method="post" action="{% url 'customer_confirm_remittance' remittance.id %}">
-                        {% csrf_token %}
-                        <li class="list-group-item">{{ remittance.remittance_items.count }}种商品</li>
-                        {% for item in remittance.remittance_items.all %}
-                        <li class="list-group-item clearfix">
-                            <div class="word-wrap">商品名：{{ item.goods.name }}</div>
-                            <div class="word-wrap">总价格：{{ item.goods.price }}</div>
-                            <div class="word-wrap">商品类型：{% for key in item.goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
-                        </li>
-                        {% endfor %}
-                        <li class="list-group-item" style="height:56px">
-                            <button type="submit" class="btn btn-primary pull-right">确认收货</button>
-                        </li>
-                    </form>
-                </ul>
-            </td>
+            <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
+            <td>{{remittance.get_status_display}}
+            <td>总价：¥{{remittance.price}}</td>
+            <td>时间：{{remittance.created_at}}</td>
         </tr>
-        {% endif %} {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

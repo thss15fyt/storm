@@ -6,6 +6,9 @@
 <ul class="list-group">
     <li class="list-group-item clearfix">
         <div class="word-wrap">
+        {% if user.real_user.photo %}
+        <img src="{{ user.real_user.photo.url }}" width="100px" height="100px">
+        {% endif %}
         {% bootstrap_icon 'user' %}{{ user.username }}
         </div>
     </li>
@@ -13,7 +16,6 @@
         <div class="word-wrap">
         <table class="table" style="margin-bottom:0">
             <tbody>
-
                 <tr>
                     <td style="border-top:0">昵称：{{ real_user.nickname }}
                     </td>
@@ -30,7 +32,6 @@
                     <td>邮件地址：{{ real_user.email }}
                     </td>
                 </tr>
-
             </tbody>
         </table>
         </div>

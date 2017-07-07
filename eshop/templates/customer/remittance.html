@@ -3,13 +3,13 @@
 
 {% block homepage_content %}
 <h3>订单详情</h3>
-<h4>店铺: {{remittance.shop.name}}</h4>
+<h4>店铺: <a href = "{% url 'shop' remittance.shop.id %}">{{remittance.shop.name}}</a></h4>
 <table class="table">
     <tbody>       
         {% for item in remittance.remittance_items.all %}
         <tr>
             <td>
-                <a href = "{% url 'goods' item.goods.id %}">{{ item.goods.name }}</a>
+                商品：<a href = "{% url 'goods' item.goods.id %}">{{ item.goods.name }}</a>
             </td>
             <td>
                 <p>数量：{{ item.number }}</p>
@@ -18,6 +18,16 @@
                 <p>价格：¥{{ item.goods.price }} * {{item.number}}</p>
             </td>
         <tr>
+        {% if remittance.status == 'e' %}
+        <tr>
+            <td>
+                <p>评分：{{item.comment.score}}</p>
+            </td>
+            <td>
+                <p>评价：{{item.comment.content}}</p>
+            </td>
+        </tr>
+        {% endif %}
         {% endfor %}
         <tr>
         <td></td><td></td><td>总价：¥{{remittance.price}}</td>
@@ -36,10 +46,17 @@
     </tbody>
 </table>
 
-{% if remittance.status == 2 %}
-    <button type="button" class="btn btn-primary"
-            onclick="">
+{% if remittance.status == 't' %}
+    <form method="post" action="{% url 'customer_confirm_remittance' remittance.id %}" >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">
     确认收货
+    </button>
+{% elif remittance.status == 'r'%}
+    <form method="post" action="{% url 'evaluate_remittance' remittance.id %}" >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">
+    评价商品
     </button>
 {% endif %}
 

@@ -20,7 +20,7 @@ def shop(request, shop_id):
     return render(request, 'base/shop.html', {'shop': shop})
 
 #商品界面
-def goods(request, goods_id):
+def goods(request, shop_id, goods_id):
     goods = get_object_or_404(Goods, pk=goods_id)
     finished_items = RemittanceItem.objects.filter(goods = goods, remittance__status = 'e')
     return render(request, 'base/goods.html', {'goods': goods, 'finished_items': finished_items})
@@ -33,5 +33,5 @@ def homepage(request):
 #商店主页
 def shop_homepage(request, shop_id):
     shop = get_object_or_404(Shop, pk = shop_id)
-    return render(request, 'seller/shop_homepage.html', {'shop': shop})
+    return render(request, 'seller/shop_info.html', {'shop': shop})
 

@@ -23,14 +23,13 @@ def signup(request):
 def signup_submit(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
-    choice = request.POST.get('choice')
     try:
         user = User.objects.create_user(username=username, password=password)
         real_user = Webuser(ori_user = user,
-                            is_owner = True if choice == 'owner' else False,
+                            is_owner = True,
                             nickname = "",
                             gender = False,
-                            age = 128,)
+                            age = 1,)
         real_user.save()
         return redirect('login')
     except:
@@ -47,7 +46,7 @@ def user_info(request):
 
 def change_user_info(request):
     real_user  = get_object_or_404(Webuser, pk = request.user.real_user.id)
-    return render(request, 'customer/change_user_info.html', {'real_user' : real_user})
+    return render(request, 'customer/change_user_info.html', {'real_user': real_user})
 
 def save_user_info(request):
     real_user  = get_object_or_404(Webuser, pk = request.user.real_user.id)
@@ -55,5 +54,8 @@ def save_user_info(request):
     real_user.gender = True if request.POST.get("gender") == "Male" else False
     real_user.age = request.POST.get("age")
     real_user.email = request.POST.get("email")
+    if real_user.photo:
+        real_user.photo.delete()
+    real_user.photo = request.FILES.get("photo")
     real_user.save()
-    return render(request, 'customer/save_user_info.html', {'real_user' : real_user})
+    return render(request, 'customer/save_user_info.html', {'real_user': real_user})

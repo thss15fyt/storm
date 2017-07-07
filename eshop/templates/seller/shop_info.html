@@ -6,6 +6,9 @@
 <ul class="list-group">
     <li class="list-group-item clearfix">
         <div class="word-wrap">
+        {% if shop.photo %}
+        <img src="{{ shop.photo.url }}" width="100px" height="100px">
+        {% endif %}
         {% bootstrap_icon 'home' %} {{ shop.name }}
         </div>
     </li>

@@ -10,7 +10,7 @@ class Webuser(models.Model):
     nickname = models.CharField(max_length=20)
     gender = models.BooleanField()
     age = models.IntegerField()
-    photo = models.ImageField(blank = True)
+    photo = models.ImageField(blank = True, upload_to = 'userphoto')
     email = models.EmailField(blank = True)
 
 class Shop(models.Model):
@@ -19,7 +19,7 @@ class Shop(models.Model):
             related_query_name = 'shop')
     name = models.CharField(max_length=20)
     introduction = models.TextField()
-    photo = models.ImageField(blank = True)
+    photo = models.ImageField(blank = True, upload_to = 'shopphoto')
     address = models.CharField(max_length = 255)
     created_at = models.DateTimeField(default = timezone.now)
     sales = models.PositiveIntegerField(default = 0)
@@ -40,10 +40,10 @@ class Remittance(models.Model):
             related_name = 'remittances',
             related_query_name = 'remittance')
     STATUS_CHOICE = (
-            ('c', 'confirmed'),
-            ('t', 'transported'),
-            ('r', 'recieved'),
-            ('e', 'evaluated')
+            ('c', '已下单'),
+            ('t', '运送中'),
+            ('r', '已收货'),
+            ('e', '已评价')
         )
     status = models.CharField(max_length = 1, choices=STATUS_CHOICE, default="c")
     address = models.CharField(max_length = 255)
@@ -91,7 +91,7 @@ class Keyword(models.Model):
     name = models.CharField(max_length = 20)
 
 class GoodsImage(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to = 'goodsphoto')
     goods = models.ForeignKey('Goods',
             related_name = 'goods_images',
             related_query_name = 'goods_image')
