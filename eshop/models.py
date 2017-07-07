@@ -21,8 +21,8 @@ class Shop(models.Model):
     introduction = models.TextField()
     photo = models.ImageField(blank = True, upload_to = 'shopphoto')
     address = models.CharField(max_length = 255)
-    score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     created_at = models.DateTimeField(default = timezone.now)
+    sales = models.PositiveIntegerField(default = 0)
 
 class ShoppingCartItem(models.Model):
     owner = models.ForeignKey('Webuser',
@@ -39,18 +39,22 @@ class Remittance(models.Model):
     shop = models.ForeignKey('Shop',
             related_name = 'remittances',
             related_query_name = 'remittance')
-    status = (
-            (0, 'confirmed'),
-            (1, 'transported'),
-            (2, 'recieved'),
+    STATUS_CHOICE = (
+            ('c', '已下单'),
+            ('t', '运送中'),
+            ('r', '已收货'),
+            ('e', '已评价')
         )
+    status = models.CharField(max_length = 1, choices=STATUS_CHOICE, default="c")
     address = models.CharField(max_length = 255)
-    payment = (
-            (0, 'online'),
-            (1, 'COD'),
+    payment_choices = (
+            (0, '在线支付'),
+            (1, '货到付款'),
         )
+    payment = models.IntegerField(choices = payment_choices)
     phone = models.CharField(max_length = 20)
     message = models.CharField(max_length = 255)
+    price = models.DecimalField(max_digits = 7, decimal_places = 2)
     created_at = models.DateTimeField(default = timezone.now)
 
 class RemittanceItem(models.Model):
@@ -58,7 +62,7 @@ class RemittanceItem(models.Model):
             related_name = 'remittance_items',
             related_query_name = 'remittance_item')
     goods = models.ForeignKey('Goods',
-            related_name = 'remittance_items')
+            related_name = 'remittance_item')
     number = models.PositiveIntegerField()
 
 class Type(models.Model):
@@ -71,6 +75,8 @@ class Goods(models.Model):
     name = models.CharField(max_length = 20)
     price = models.DecimalField(max_digits = 7, decimal_places = 2)
     introduction = models.TextField()
+    total_score = models.FloatField(default=0)
+    score_num = models.IntegerField(default=0)
     score = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0)
     goods_type = models.ForeignKey('Type',
             related_name = 'type_goods',
@@ -79,6 +85,7 @@ class Goods(models.Model):
     keywords = models.ManyToManyField('Keyword',
             related_name = 'keyword_goods',
             related_query_name = 'keyword_goods')
+    sales = models.PositiveIntegerField(default = 0)
 
 class Keyword(models.Model):
     name = models.CharField(max_length = 20)
@@ -90,13 +97,12 @@ class GoodsImage(models.Model):
             related_query_name = 'goods_image')
 
 class Comment(models.Model):
-    goods = models.ForeignKey('Goods',
-            related_name = 'comments',
-            related_query_name = 'comment')
+    item = models.OneToOneField('RemittanceItem',
+            related_name = 'comment',
+            related_query_name = 'comments')
     author = models.ForeignKey('Webuser',
-            related_name = 'comments',
-            related_query_name = 'comment')
+            related_name = 'comment',
+            related_query_name = 'comments')
     content = models.TextField()
     score = models.IntegerField()
     created_at = models.DateTimeField(default = timezone.now)
-

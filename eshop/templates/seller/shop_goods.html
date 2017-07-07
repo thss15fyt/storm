@@ -5,7 +5,7 @@
     {% for goods in shop.goods.all|dictsort:"price" %}
     <li class="list-group-item clearfix">
         <div class="word-wrap">商品名：<a href="{% url 'goods' goods.id %}">{{ goods.name }}</a></div>
-        <div class="word-wrap">商品价格：{{ goods.price }}</div>
+        <div class="word-wrap">商品价格：¥{{ goods.price }}</div>
         <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
         <div class="word-wrap">商品类型：{% for key in goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
         <div class="pull-right">
@@ -14,7 +14,7 @@
     </li>
     <li class="list-group-item clearfix">
         <div class="pull-right">
-        <a href="{% url 'change_goods_info' goods.id %}">修改商品信息</a>
+        <a href="{% url 'change_goods_info' shop.id goods.id %}">修改商品信息</a>
         </div>
     </li>
     {% endfor %}

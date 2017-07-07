@@ -1,7 +1,6 @@
 {% extends 'base/base.html' %} {% load bootstrap3 %} 
 
 {% block search %}
-
 <form method="post" action="{% url 'search' %}" style="margin:auto;width:400px">
     {% csrf_token %}
     <div class="form-group" style="display:inline-block;margin-bottom:0">
@@ -12,7 +11,7 @@
         </button>
     </div>
 </form>
-
+<h3>&nbsp</h3>
 {% endblock %}
 
 {% block content %}

@@ -2,7 +2,8 @@
 {% load bootstrap3 %}
 {% block homepage_content %}
 <h2>个人信息</h2>
-<form method="post" enctype="multipart/form-data" action="{% url 'save_user_info' real_user.id %}" style="float:left">
+
+<form method="post" enctype="multipart/form-data" action="{% url 'save_user_info' %}" style="float:left">
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <div class="word-wrap">
@@ -25,7 +26,6 @@
                         </tr>
                         <tr>
                             <td>
-                                {% csrf_token %}
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="gender" style="float:left;padding-top:7px">性别：
                                     </label>
@@ -39,7 +39,6 @@
                         </tr>
                         <tr>
                             <td>
-                                {% csrf_token %}
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="age" style="float:left;padding-top:7px" >年龄：
                                     </label>
@@ -49,7 +48,6 @@
                         </tr>
                         <tr>
                             <td>
-                                {% csrf_token %}
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="email" style="float:left;padding-top:7px">邮箱：
                                     </label>

@@ -28,12 +28,12 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>{% if user.real_user.photo %}<img src="{{user.real_user.photo.url}}" width="40px" height="40px" style="margin-top:5px;margin-right:10px;border-radius:5px">{% endif %}</li>
-                    <li class="active"><a href="{% url 'shop_list' %}">HOME</a></li>
+                    <li class="active"><a href="{% url 'shop_list' %}">主页</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'homepage' user.real_user.id %}">个人主页</a></li>
+                        <li><a href="{% url 'homepage' %}">个人中心</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>
                         <li><a href="{% url 'logout' %}">登出(<b>{{user.username}})</b></a></li>
+                        <li>{% if user.real_user.photo %}<img src="{{user.real_user.photo.url}}" width="40px" height="40px" style="margin-top:5px;margin-right:10px;border-radius:5px">{% endif %}</li>
                     {% else %}
                         <li><a href="{% url 'login' %}">登录</a></li>
                         <li><a href="{% url 'signup' %}">注册</a></li>
@@ -45,11 +45,9 @@
         <!-- /.container-fluid -->
     </nav>
     <h3>&nbsp</h3>
-    <div style="width:100%;height:34px">{% block search %}{% endblock %}</div>
+    
     <div class="container">
-        <div class="header clearfix">
-            <h3 class="text-muted">STORM</h3>
-        </div>
+        <div style="width:100%;height:34px">{% block search %}{% endblock %}</div>
         <section id="content">{% block content %}{% endblock %}</section>
         <footer class="footer">
             <p>&copy; 2017 STORM</p>

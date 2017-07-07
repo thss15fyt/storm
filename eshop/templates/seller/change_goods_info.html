@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 {% block homepage_content %}
 <h2>商品信息</h2>
-<form method="post" enctype="multipart/form-data" action="{% url 'save_goods_info' goods.id %}" style="float:left">
+<form method="post" enctype="multipart/form-data" action="{% url 'save_goods_info' shop.id goods.id %}" style="float:left">
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <div class="word-wrap">

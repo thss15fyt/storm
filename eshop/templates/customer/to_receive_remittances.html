@@ -1,14 +1,16 @@
 {% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
-<h2>我的订单</h2>
+<h2>待收货订单</h2>
 <table class="table">
     <tbody>
         {% for remittance in remittances %}
+        {% if remittance.status == 't' %}
         <tr>
             <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
             <td>{{remittance.get_status_display}}
             <td>总价：¥{{remittance.price}}</td>
             <td>时间：{{remittance.created_at}}</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>

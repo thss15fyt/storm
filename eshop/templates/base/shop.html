@@ -27,10 +27,11 @@
     <li class="list-group-item">{{ shop.goods.count }}件商品</li>
     {% for goods in shop.goods.all|dictsort:"price" %}
     <li class="list-group-item clearfix">
-        <div class="word-wrap">商品名：<a href="{% url 'goods' goods.id %}">{{ goods.name }}</a></div>
+        <div class="word-wrap">商品名：<a href="{% url 'goods' shop.id goods.id %}">{{ goods.name }}</a></div>
         <div class="word-wrap">商品价格：{{ goods.price }}</div>
         <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
         <div class="word-wrap">商品类型：{% for key in goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
+        <div class="word-wrap">商品评分：{{ goods.score }}</div>
         <div class="pull-right">
             {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user }}</b>
         </div>
