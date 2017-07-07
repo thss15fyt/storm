@@ -11,7 +11,7 @@
         {% if item.goods.shop == group.shop %}
         <tr>
             <td>
-            <a href = "{% url 'goods' item.goods.id %}">
+            <a href = "{% url 'goods' item.goods.shop.id item.goods.id %}">
             {{ item.goods.name }}</a>
             </td>
             <td>
