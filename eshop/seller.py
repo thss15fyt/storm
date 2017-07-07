@@ -24,7 +24,7 @@ class ShopManager:
         if form.is_valid() and request.user.real_user.is_owner == True:
             shop = form.save(commit=False)
             shop.owner = request.user.real_user
-            shop.photo = request.FILES.get("shopphoto")
+            shop.photo = request.FILES.get("photo")
             shop.save()
             messages.info(request, '店铺《{}》创建成功'.format(shop.name))
             form = ShopForm()
@@ -95,7 +95,7 @@ class ShopRemittanceManager:
     def shop_remittances(request, shop_id):
         shop  = get_object_or_404(Shop, pk = shop_id)
         remittances = shop.remittances.all().order_by('-created_at')
-        return render(request, 'seller/shop_remittances.html', {'shop': shop, 
+        return render(request, 'seller/shop_remittances.html', {'shop': shop,
             'remittances': remittances})
 
     def shop_remittance(request, shop_id, remittance_id):
