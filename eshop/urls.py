@@ -124,7 +124,7 @@ urlpatterns = [
     url(r'^shop_homepage/([1-9][0-9]*)/shop_confirmed_remittances$', ShopRemittanceManager.shop_confirmed_remittances,
         name='shop_confirmed_remittance'),
     #订单发货
-    url(r'^shop_remittance/([1-9][0-9]*)/shop_confirm_remittance$', ShopRemittanceManager.shop_confirm_remittance,
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_remittance/([1-9][0-9]*)/shop_confirm_remittance$', ShopRemittanceManager.shop_confirm_remittance,
         name='shop_confirm_remittance'),
 
     #5.管理者 ****************************************************************************

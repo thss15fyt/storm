@@ -7,7 +7,7 @@
         {% for item in remittance.remittance_items.all %}
         <tr>
             <td>
-                商品：<a href = "{% url 'goods' item.goods.id %}">{{ item.goods.name }}</a>
+                商品：<a href = "{% url 'goods' item.goods.shop.id item.goods.id %}">{{ item.goods.name }}</a>
             </td>
             <td>
                 <p>数量：{{ item.number }}</p>
@@ -44,9 +44,8 @@
     </tbody>
 </table>
 
-
 {% if remittance.status == 'c' %}
-    <form method="post" action="{% url 'shop_confirm_remittance' remittance.id %}" >
+    <form method="post" action="{% url 'shop_confirm_remittance' shop.id remittance.id %}" >
     {% csrf_token %}
     <button type="submit" class="btn btn-primary">
     发货
