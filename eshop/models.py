@@ -41,7 +41,7 @@ class Remittance(models.Model):
             related_query_name = 'remittance')
     STATUS_CHOICE = (
             ('c', '已下单'),
-            ('t', '运送中'),
+            ('t', '配送中'),
             ('r', '已收货'),
             ('e', '已评价')
         )

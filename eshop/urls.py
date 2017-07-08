@@ -33,7 +33,10 @@ urlpatterns = [
     url(r'^search$', Search.search,
         name='search'),
 
-    #消费者-购物车相关
+    #消费者-购物相关
+    #直接购买
+    url(r'^shop/([1-9][0-9]*)/goods/([1-9][0-9]*)/buy_directly$', Buy.buy_directly,
+        name='buy_directly'),
     #购物车界面
     url(r'^shoppingcart$', Buy.shoppingcart,
         name='shoppingcart'),
@@ -47,22 +50,13 @@ urlpatterns = [
     url(r'^shoppingcart/buyall/$', Buy.buyall,
         name="buyall"),
     #将商品添加到购物车
-    url(r'^shop/([1-9][0-9]*)/goods/addtocart$', Buy.addtocart,
+    url(r'^shop/([1-9][0-9]*)/goods/([1-9][0-9]*)/addtocart$', Buy.addtocart,
         name='addtocart'),
 
     #消费者－订单相关
     #所有订单
     url(r'^homepage/remittances$', CustomerRemittanceManager.remittances,
         name='remittances'),
-    #已完成订单
-    url(r'^homepage/finished_remittances$', CustomerRemittanceManager.finished_remittances,
-        name='finished_remittances'),
-    #待评价订单
-    url(r'^homepage/to_evaluate_remittances$', CustomerRemittanceManager.to_evaluate_remittances,
-        name='to_evaluate_remittances'),
-    #待收货订单
-    url(r'^homepage/to_receive_remittances$', CustomerRemittanceManager.to_receive_remittances,
-        name='to_receive_remittances'),
     #订单详情
     url(r'^remittance/([1-9][0-9]*)$', CustomerRemittanceManager.remittance,
         name='remittance'),
@@ -70,7 +64,7 @@ urlpatterns = [
     url(r'^create_remittance_shop/([1-9][0-9]*)$', CustomerRemittanceManager.create_remittance_shop,
         name='create_remittance_shop'),
     #通过商品创建订单，通过直接购买按钮
-    url(r'^goods/([1-9][0-9]*)/create_remittance$', CustomerRemittanceManager.create_remittance_goods,
+    url(r'^create_remittance_goods/([1-9][0-9]*)$', CustomerRemittanceManager.create_remittance_goods,
         name='create_remittance_goods'),
     #确认收货
     url(r'^remittance/([1-9][0-9]*)/customer_confirm_remittance$', CustomerRemittanceManager.customer_confirm_remittance,
@@ -120,9 +114,6 @@ urlpatterns = [
     #店铺订单详情页
     url(r'^shop_homepage/([1-9][0-9]*)/shop_remittance/([1-9][0-9]*)$', ShopRemittanceManager.shop_remittance,
         name='shop_remittance'),
-    #
-    url(r'^shop_homepage/([1-9][0-9]*)/shop_confirmed_remittances$', ShopRemittanceManager.shop_confirmed_remittances,
-        name='shop_confirmed_remittance'),
     #订单发货
     url(r'^shop_homepage/([1-9][0-9]*)/shop_remittance/([1-9][0-9]*)/shop_confirm_remittance$', ShopRemittanceManager.shop_confirm_remittance,
         name='shop_confirm_remittance'),

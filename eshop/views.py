@@ -7,11 +7,12 @@ from .models import Shop, Goods, Webuser, RemittanceItem
 
 #主页
 def index(request):
-    return render(request, 'base/index.html')
+    goodss = Goods.objects.order_by('-sales')
+    return render(request, 'base/index.html', {'goodss': goodss})
 
 #商店列表
 def shop_list(request):
-    shops = Shop.objects.order_by('-created_at')
+    shops = Shop.objects.order_by('-sales')
     return render(request, 'base/shop_list.html', {'shops': shops})
 
 #店铺界面
@@ -28,7 +29,7 @@ def goods(request, shop_id, goods_id):
 #个人主页
 def homepage(request):
     real_user = get_object_or_404(Webuser, pk = request.user.real_user.id)
-    return render(request, 'customer/homepage.html', {'real_user': real_user})
+    return render(request, 'base/user_info.html', {'real_user': real_user})
 
 #商店主页
 def shop_homepage(request, shop_id):

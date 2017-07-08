@@ -12,14 +12,18 @@
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>{{ shop.name}}</h3>
-        <small>
-{% bootstrap_icon 'user' %}<strong>{{ shop.owner.ori_user }}</strong>
-{% bootstrap_icon 'time' %}<span> {{ shop.created_at | naturaltime}}</span>
-</small>
+        <h3>{{shop.name}}</h3>
     </div>
+    
     <div class="panel-body word-wrap">
-        {{ shop.introduction }}
+        <div class="pull-right">
+        {% if shop.photo %}
+        <img src="{{ shop.photo.url }}" width="100px" height="100px">
+        {% endif %}
+        </div>
+        <p>简介：{{shop.intoduction}}</p>
+        <p>地址：{{shop.address}}</p>
+        <p>销量：{{shop.sales}}</p>
     </div>
     <div class="panel-footer"></div>
 </div>
@@ -32,9 +36,8 @@
         <div class="word-wrap">商品简介：{{ goods.introduction }}</div>
         <div class="word-wrap">商品类型：{% for key in goods.keywords.all|dictsort:"name" %}[ {{ key.name }} ] {% endfor %}</div>
         <div class="word-wrap">商品评分：{{ goods.score }}</div>
-        <div class="pull-right">
-            {% bootstrap_icon 'user' %}<b>{{ shop.owner.ori_user }}</b>
-        </div>
+        <div class="word-wrap">商品销量：{{ goods.sales }}</div>
+
     </li>
     {% endfor %}
 </ul>

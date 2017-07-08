@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="{% url 'index' %}" title="Sales and Marketing Bootstrap Theme">
+                <a href="{% url 'index' %}">
                     <img class="logo" src="{% static 'img/logo_1.png' %}" alt="Sales and Marketing Bootstrap Theme" style="margin-top: 5px;" />
                 </a>
             </div>
@@ -28,7 +28,8 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="{% url 'shop_list' %}">主页</a></li>
+                    <li class="active"><a href="{% url 'index' %}">主页</a></li>
+                    <li><a href="{% url 'shop_list' %}">商店</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'homepage' %}">个人中心</a></li>
                         <li><a href="{% url 'shoppingcart' %}">购物车</a></li>

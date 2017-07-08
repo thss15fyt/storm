@@ -3,12 +3,9 @@
 {% block content %}
 
 <h3>新订单</h3>
-{% for group in order_groups %}
-<h5>店铺 {{group.shop.name}}</h5>
+<h5>店铺 {{new_remittance.shop.name}}</h5>
 <table class="table">
     <tbody>
-        {% for item in user.real_user.shoppingCart.all %}
-        {% if item.goods.shop == group.shop %}
         <tr>
             <td>
             <a href = "{% url 'goods' item.goods.shop.id item.goods.id %}">
@@ -21,15 +18,13 @@
             <p>价格：¥{{ item.goods.price}} * {{item.number}}</p>
             </td>
         </tr>
-        {% endif %}
-        {% endfor %}
         <tr>
-        <td></td><td></td><td>总价：¥{{group.price}}</td>
+        <td></td><td></td><td>总价：¥{{new_remittance.price}}</td>
         </tr>
     </tbody>
 </table>
 <div>
-    <form method="post" action="{% url 'create_remittance_shop' group.shop.id %}">
+    <form method="post" action="{% url 'create_remittance_goods' new_remittance.id %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="phone">联系方式
@@ -53,7 +48,6 @@
     </form>
     <hr>
 </div>
-{% endfor %}
 
 {% include 'base/messages.html' %}
 {% endblock %}

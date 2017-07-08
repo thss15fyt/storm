@@ -1,15 +1,79 @@
 {% extends 'customer/homepage.html' %} {% load bootstrap3 %} {% block homepage_content %}
-<h2>我的订单</h2>
-<table class="table">
-    <tbody>
-        {% for remittance in remittances %}
-        <tr>
-            <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
-            <td>{{remittance.get_status_display}}
-            <td>总价：¥{{remittance.price}}</td>
-            <td>时间：{{remittance.created_at}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#all" data-toggle="tab">
+             所有订单
+        </a>
+    </li>
+    <li><a href="#finished" data-toggle="tab">已完成订单</a></li>
+    <li><a href="#to_receive" data-toggle="tab">待收货订单</a></li>
+    <li><a href="#to_evaluate" data-toggle="tab">待评价订单</a></li>    
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="all">
+        <table class="table">
+            <tbody>
+            {% for remittance in remittances %}
+                <tr>
+                    <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
+                    <td>{{remittance.get_status_display}}
+                    <td>总价：¥{{remittance.price}}</td>
+                    <td>时间：{{remittance.created_at}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="finished">
+        <table class="table">
+            <tbody>
+            {% for remittance in remittances %}
+            {% if remittance.status == 'e' %}
+                <tr>
+                    <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
+                    <td>{{remittance.get_status_display}}
+                    <td>总价：¥{{remittance.price}}</td>
+                    <td>时间：{{remittance.created_at}}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="to_receive">
+        <table class="table">
+            <tbody>
+            {% for remittance in remittances %}
+            {% if remittance.status == 't' %}
+                <tr>
+                    <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
+                    <td>{{remittance.get_status_display}}
+                    <td>总价：¥{{remittance.price}}</td>
+                    <td>时间：{{remittance.created_at}}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="tab-pane fade" id="to_evaluate">
+        <table class="table">
+            <tbody>
+            {% for remittance in remittances %}
+            {% if remittance.status == 'r' %}
+                <tr>
+                    <td><a href="{% url 'remittance' remittance.id %}">订单{{remittance.id}}</a></td>
+                    <td>{{remittance.get_status_display}}
+                    <td>总价：¥{{remittance.price}}</td>
+                    <td>时间：{{remittance.created_at}}</td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

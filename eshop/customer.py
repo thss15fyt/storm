@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Webuser, Shop, Goods, Keyword, ShoppingCartItem, Remittance, RemittanceItem, Comment
-from .form import ShoppingCartItemForm, RemittanceForm
+from .form import ShoppingCartItemForm, RemittanceItemForm, RemittanceForm
 import decimal
 
 class Search:
@@ -19,13 +19,36 @@ class Search:
         return render(request, 'customer/search.html', {'target_keys': target_keys})
 
 class Buy:
+    def buy_directly(request, shop_id, goods_id):
+        shop = get_object_or_404(Shop, pk=shop_id)
+        goods = get_object_or_404(Goods, pk=goods_id)
+        params = request.POST if request.method == 'POST' else None
+        form = RemittanceItemForm(params)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.goods = goods
+            new_remittance = Remittance()
+            new_remittance.owner = request.user.real_user
+            new_remittance.shop = shop
+            new_remittance.status = 'c'
+            new_remittance.address = ""
+            new_remittance.payment = 0
+            new_remittance.phone = 0
+            new_remittance.messages = ""
+            new_remittance.price = goods.price * item.number
+            new_remittance.save()
+            item.remittance = new_remittance
+            item.save()
+        return render(request, 'customer/create_remittance_directly.html', 
+            {'new_remittance': new_remittance, 'item': item})
+
     def shoppingcart(request):
         price = decimal.Decimal(0.0)
         for item in request.user.real_user.shoppingCart.all():
             price += item.number * item.goods.price
         return render(request, 'customer/shoppingcart.html', {'price': price})
 
-    def addtocart(request, goods_id):
+    def addtocart(request, shop_id, goods_id):
         goods = get_object_or_404(Goods, pk=goods_id)
         params = request.POST if request.method == 'POST' else None
         form = ShoppingCartItemForm(params)
@@ -102,7 +125,7 @@ class CustomerRemittanceManager:
             new_remittance = form.save(commit=False)
             new_remittance.owner = request.user.real_user
             new_remittance.shop = shop
-            new_remittance.payment = 0
+            new_remittance.payment = request.POST.get("payment")
             new_remittance.price = 0
             new_remittance.save()
             price = decimal.Decimal(0.0)
@@ -124,24 +147,33 @@ class CustomerRemittanceManager:
             remittances = real_user.remittances.all().order_by('-created_at')
             return render(request, 'customer/remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
-    def create_remittance_goods(request, goods_id):
-        goods = get_object_or_404(Goods, pk=goods_id)
-        shoppingcartitem = ShoppingCartItem()
-        shoppingcartitem.owner = request.user.real_user
-        shoppingcartitem.goods = goods
-        shoppingcartitem.number = 1
-        shoppingcartitem.save()
-        shops = []
-        for item in request.user.real_user.shoppingCart.all():
-            if item.goods.shop not in shops:
-                shops.append(item.goods.shop)
-        return render(request, 'customer/create_remittance_fromcart.html', {'shops': shops})
+    def create_remittance_goods(request, remittance_id):
+        remittance = get_object_or_404(Remittance, pk=remittance_id)
+        remittance.payment = request.POST.get("payment")
+        params = request.POST if request.method == 'POST' else None
+        form = RemittanceForm(params)
+        if form.is_valid():
+            new_remittance = form.save(commit=False)
+            remittance.address = new_remittance.address
+            remittance.phone = new_remittance.phone
+            remittance.message = new_remittance.message
+            remittance.save()
+        real_user = get_object_or_404(Webuser, pk=request.user.real_user.id)
+        remittances = real_user.remittances.all().order_by('-created_at')
+        return render(request, 'customer/remittances.html', {'real_user' : real_user, 'remittances': remittances})
 
 
     def customer_confirm_remittance(request, remittance_id):
         remittance = get_object_or_404(Remittance, pk = remittance_id)
         real_user = remittance.owner
         remittance.status = 'r'
+        total_sales = 0
+        for item in remittance.remittance_items.all():
+            item.goods.sales += item.number
+            item.goods.save()
+            total_sales += item.number
+        remittance.shop.sales += total_sales
+        remittance.shop.save()
         remittance.save()
         return render(request, 'customer/remittance.html', {'remittance': remittance})
 

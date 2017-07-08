@@ -16,6 +16,11 @@ class ShoppingCartItemForm(forms.ModelForm):
         model = ShoppingCartItem
         fields = ('number', )
 
+class RemittanceItemForm(forms.ModelForm):
+    class Meta:
+        model = RemittanceItem
+        fields = ('number', )
+
 class RemittanceForm(forms.ModelForm):
     class Meta:
         model = Remittance

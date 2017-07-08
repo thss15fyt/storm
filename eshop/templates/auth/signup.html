@@ -13,6 +13,27 @@
             </label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
         </div>
+        <div class="form-group">
+            <label for="nickname">昵称
+            </label>
+            <input type="text" id="nickname" name="nickname" class="form-control" placeholder="昵称" required />
+        </div>
+        <div class="form-group">
+            <label for="gender">性别&nbsp&nbsp
+            </label>
+            <label><input checked="true" name="gender" type="radio" value="0" />&nbsp男&nbsp&nbsp</label>
+            <label><input name="gender" type="radio" value="1" />&nbsp女 </label> 
+        </div>
+        <div class="form-group">
+            <label for="age">年龄：
+            </label>
+            <input type="number" id="age" name="age" class="form-control" placeholder="年龄" min="1" max="150" required />
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱：
+            </label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" required />
+        </div>
         <button type="submit" class="btn btn-primary">注册</button>
     </form>
 </div>

@@ -3,7 +3,23 @@
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
+{% block search %}
+<h5>&nbsp</h5>
+<form method="post" action="{% url 'search' %}" style="margin:auto;width:400px">
+    {% csrf_token %}
+    <div class="form-group" style="display:inline-block;margin-bottom:0">
+        <label for="search" style="float:left;padding-top:7px">请输入搜索关键词：
+        </label>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Keywords" required style="float:left;width:200px"/>
+        <button type="submit" class="btn btn-primary">GO
+        </button>
+    </div>
+</form>
+
+{% endblock %}
 {% block content %}
+<h4>&nbsp</h4>
+<h4>精选和推荐</h4>
 <div id="myCarousel" class="carousel slide">
     <!-- 轮播（Carousel）指标 -->
     <ol class="carousel-indicators">
@@ -31,5 +47,27 @@
         data-slide="next">&rsaquo;
     </a>
 </div>
+
+<h3>&nbsp</h3>
+<h4>所有商品</h4>
+<table class="table">
+    <tbody>
+        {% for goods in goodss %}
+        <tr>
+            <td>
+                <div class="col-sm-3 col-md-2 sidebar">
+                    
+                </div>
+                <div class="col-sm-9 col-md-10 main">
+                    <p>商品名：<a href="{% url 'goods' goods.shop.id goods.id %}">{{goods.name}}</a></p>
+                    <p>简介：{{goods.introduction}}</p>
+                    <p>价格：¥{{goods.price}}</p>
+                    <p>销量：{{goods.sales}}</p>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
 

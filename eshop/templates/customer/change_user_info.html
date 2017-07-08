@@ -29,11 +29,8 @@
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="gender" style="float:left;padding-top:7px">性别：
                                     </label>
-                                    <input type="text" id="gender" name="gender" class="form-control" list="gender_list" placeholder="tip: 不好意思这个没的选……" required style="float:left;width:400px" />
-                                    <datalist id="gender_list">
-                                        <option label="男" value="男" />
-                                        <option label="女" value="女" />
-                                    </datalist>
+                                    <label><input checked="true" name="gender" type="radio" value="0" />&nbsp男&nbsp&nbsp</label>
+                                    <label><input name="gender" type="radio" value="1" />&nbsp女 </label> 
                                 </div>
                             </td>
                         </tr>
@@ -60,7 +57,7 @@
                                 {% csrf_token %}
                                 <label for="photo" style="float:left;padding-top:7px">头像：
                                 </label>
-                                <input type="file" id="photo" name="photo" required style="float:left;width:400px" />
+                                <input type="file" id="photo" name="photo" style="float:left;width:400px" />
                             </td>
                         </tr>
                     </tbody>

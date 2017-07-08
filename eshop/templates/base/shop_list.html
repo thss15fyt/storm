@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block search %}
-
+<h5>&nbsp</h5>
 <form method="post" action="{% url 'search' %}" style="margin:auto;width:400px">
     {% csrf_token %}
     <div class="form-group" style="display:inline-block;margin-bottom:0">
@@ -23,14 +23,22 @@
 {% endblock %}
 
 {% block content %}
+<h3>&nbsp</h3>
 <table class="table">
     <tbody>
         {% for shop in shops %}
         <tr>
-            <td><a href="{% url 'shop' shop.id %}">{{shop.name}}</a>
-                <div class="pull-right">
-                    {% bootstrap_icon 'user' %}<b>{{shop.owner.ori_user}}</b> 
-                    {% bootstrap_icon 'time' %} {{shop.created_at | naturaltime}}
+            <td>
+                <div class="col-sm-3 col-md-2 sidebar">
+                    {% if shop.photo %}
+                    <img src="{{ shop.photo.url }}" width="110px" height="110px">
+                    {% endif %}
+                </div>
+                <div class="col-sm-9 col-md-10 main">
+                    <p>店铺名：<a href="{% url 'shop' shop.id %}">{{shop.name}}</a></p>
+                    <p>店铺简介：{{shop.introduction}}</p>
+                    <p>地址：{{shop.address}}</p>
+                    <p>销量：{{shop.sales}}</p>
                 </div>
             </td>
         </tr>

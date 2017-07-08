@@ -27,9 +27,10 @@ def signup_submit(request):
         user = User.objects.create_user(username=username, password=password)
         real_user = Webuser(ori_user = user,
                             is_owner = True,
-                            nickname = "",
-                            gender = False,
-                            age = 1,)
+                            nickname = request.POST.get('nickname'),
+                            gender = True if request.POST.get("gender") == "0" else False,
+                            age = request.POST.get('age'),
+                            email = request.POST.get('email'),)
         real_user.save()
         return redirect('login')
     except:
@@ -54,8 +55,9 @@ def save_user_info(request):
     real_user.gender = True if request.POST.get("gender") == "Male" else False
     real_user.age = request.POST.get("age")
     real_user.email = request.POST.get("email")
-    if real_user.photo:
+    if real_user.photo and request.FILES.get("photo") != None:
         real_user.photo.delete()
-    real_user.photo = request.FILES.get("photo")
+    if request.FILES.get("photo") != None:
+        real_user.photo = request.FILES.get("photo")
     real_user.save()
     return render(request, 'customer/save_user_info.html', {'real_user': real_user})

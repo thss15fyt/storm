@@ -101,6 +101,8 @@ class ShopRemittanceManager:
     def shop_remittance(request, shop_id, remittance_id):
         shop = get_object_or_404(Shop, pk = shop_id)
         remittance = get_object_or_404(Remittance, pk = remittance_id)
+        print(remittance.status)
+
         return render(request, 'seller/shop_remittance.html', {'shop': shop,
             'remittance': remittance})
 
