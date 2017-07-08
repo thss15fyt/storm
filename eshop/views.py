@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Shop, Goods, Webuser, RemittanceItem
+from .models import Shop, Goods, Webuser, RemittanceItem, GoodsImage
 
 #主页
 def index(request):
@@ -23,7 +23,9 @@ def shop(request, shop_id):
 def goods(request, shop_id, goods_id):
     goods = get_object_or_404(Goods, pk=goods_id)
     finished_items = RemittanceItem.objects.filter(goods = goods, remittance__status = 'e')
-    return render(request, 'base/goods.html', {'goods': goods, 'finished_items': finished_items})
+    goods_images = goods.goods_images.all()
+    num = len(goods_images)
+    return render(request, 'base/goods.html', {'goods': goods, 'finished_items': finished_items, 'goods_images': goods_images, 'img_range': range(1, num)})
 
 #个人主页
 def homepage(request):

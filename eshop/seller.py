@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.contrib import messages
 from .form import ShopForm, GoodsForm
-from .models import Shop, Goods, Webuser, Keyword, Remittance
+from .models import Shop, Goods, Webuser, Keyword, Remittance, GoodsImage
 
 
 class ShopManager:
@@ -88,6 +88,30 @@ class GoodsManager:
         goods.price = request.POST.get("price")
         goods.introduction = request.POST.get("introduction")
         return render(request, 'seller/save_goods_info.html', {'shop': shop, 'goods': goods})
+
+    def addimg(request, shop_id, goods_id):
+        shop = get_object_or_404(Shop, pk = shop_id)
+        goods = get_object_or_404(Goods, pk = goods_id)
+        img = request.FILES.get("image")
+        imgs = goods.goods_images.all()
+        num = len(imgs)
+        if img:
+            if num >= 5:
+                messages.info(request, '至多展示五张图片，请清空后重新上传')
+            else:
+                goodsimg = GoodsImage(goods = goods, image = img)
+                goodsimg.save()
+                messages.info(request, '图片添加成功')
+        return render(request, 'seller/shop_goods.html', {'shop': shop})
+
+    def clearimg(request, shop_id, goods_id):
+        shop = get_object_or_404(Shop, pk = shop_id)
+        goods = get_object_or_404(Goods, pk = goods_id)
+        goods.goods_images.all().delete()
+        messages.info(request, '已清空所有商品图片')
+        return render(request, 'seller/shop_goods.html', {'shop': shop})
+
+
 
 class ShopRemittanceManager:
 

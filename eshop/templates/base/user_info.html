@@ -7,7 +7,7 @@
     <li class="list-group-item clearfix">
         <div class="word-wrap">
         {% if user.real_user.photo %}
-        <img src="{{ user.real_user.photo.url }}" width="100px" height="100px">
+            <img src="{{ user.real_user.photo.url }}" width="100px" height="100px">
         {% endif %}
         {% bootstrap_icon 'user' %}{{ user.username }}
         </div>

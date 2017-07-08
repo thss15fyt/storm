@@ -13,10 +13,23 @@
         </div>
     </li>
     <li class="list-group-item clearfix">
+        <div class="pull-left">
+            <form method="post" enctype="multipart/form-data" action="{% url 'addimg' shop.id goods.id %}" style="float:left">
+                <button type="submit" class="btn btn-primary" style="float:left">添加一张图片</button>
+                {% csrf_token %}
+                <label for="image" style="float:left;padding-top:7px"></label>
+                <input type="file", id="image", name="image">
+            </form>
+        </div>
+        <form method="post" action="{% url 'clearimg' shop.id goods.id %}">
+            <button type="submit" class="btn btn-primary" style="float:left">清空</button>
+            {% csrf_token %}
+        </form>
         <div class="pull-right">
-        <a href="{% url 'change_goods_info' shop.id goods.id %}">修改商品信息</a>
+            <a href="{% url 'change_goods_info' shop.id goods.id %}">修改商品信息</a>
         </div>
     </li>
+    {% include 'base/messages.html' %}
     {% endfor %}
 </ul>
 {% endblock %}

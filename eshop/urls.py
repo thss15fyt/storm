@@ -108,6 +108,9 @@ urlpatterns = [
     #创建商品
     url(r'^shop_homepage/([1-9][0-9]*)/create_goods$', GoodsManager.create_goods,
         name='create_goods'),
+    #为商品添加图片
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_goods/addimg/([1-9][0-9]*)', GoodsManager.addimg, name="addimg"),
+    url(r'^shop_homepage/([1-9][0-9]*)/shop_goods/clearimg/([1-9][0-9]*)', GoodsManager.clearimg, name="clearimg"),
     #修改商品信息
     url(r'^shop_homepage/([1-9][0-9]*)/shop_goods/change_goods_info/([1-9][0-9]*)$', GoodsManager.change_goods_info,
         name='change_goods_info'),
